@@ -10,6 +10,14 @@ Hooks.once("init", function () {
     config: true,
     type: Boolean,
     default: true,
+    onChange: function (sett) {
+      if (canvas.tokens.CBTurnMarker) {
+        canvas.tokens.CBTurnMarker.Destroy(!sett);
+      }
+      if(sett){
+        new TurnMarker();
+      }
+    },
   });
 
   game.settings.register("combatbooster", "markerPath", {

@@ -1,18 +1,20 @@
-const COMBAT_BOOSTER_MODULE_NAME = "combatbooster"
+const COMBAT_BOOSTER_MODULE_NAME = "combatbooster";
 
 /***************
  * TURN MARKER *
  ***************/
 
 Hooks.on("canvasReady", function () {
-  new TurnMarker();
+  if (game.settings.get("combatbooster", "enableMarker")) new TurnMarker();
 });
 
 Hooks.on("updateCombat", function () {
-  if (!canvas.tokens.CBTurnMarker) {
-    new TurnMarker();
-  } else {
-    canvas.tokens.CBTurnMarker.MoveToCombatant();
+  if (game.settings.get("combatbooster", "enableMarker")) {
+    if (!canvas.tokens.CBTurnMarker) {
+      new TurnMarker();
+    } else {
+      canvas.tokens.CBTurnMarker.MoveToCombatant();
+    }
   }
 });
 
@@ -23,5 +25,3 @@ Hooks.on("updateToken", function (token, updates) {
     }
   }
 });
-
-
