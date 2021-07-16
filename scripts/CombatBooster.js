@@ -1,6 +1,8 @@
 Hooks.on("updateActor",async function (actor,updates){
     if(game.combat?.started && game.user.isGM && game.settings.get("combatbooster", "markDefeated")){
-        let token = canvas.tokens.get(actor.parent.id)
+        debugger
+        let token = actor.parent ? canvas.tokens.get(actor.parent.id) : canvas.tokens.placeables.find(t=>t.actor.id==actor.id)
+        if(!token) return
         if(updates.data?.attributes?.hp?.value === 0){
             for(let combatant of game.combat.combatants){
                 if(combatant.token.id === token.id){
