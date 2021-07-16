@@ -38,8 +38,9 @@ class TurnMarker {
     this.Update();
   }
 
-  Destroy() {
+  Destroy(reallyDestroy) {
     let child = this.token.children.find(c=> c.name === "CBTurnMarker")
+    this.sprite.reallyDestroy = reallyDestroy;
     this.token.removeChild(child);
     this.sprite.destroy();
     this.container.destroy();
