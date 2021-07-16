@@ -1,15 +1,15 @@
 .combatHUD {
-    background-color: rgba(0, 0, 0, 0.6);
-    opacity: 1;
-    border: 1px solid #333;
-    border-radius: 8px;
-    box-shadow: 0 0 15px #000;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-evenly;
-    z-index: 1000;
-    position: absolute;
-    bottom: 70px;
-  } 
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 1;
+  border: 1px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 0 15px #000;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-evenly;
+  top: calc(100% + 60px);
+  height: auto;
+  position: absolute;
+}
