@@ -3,7 +3,7 @@
  **************/
 
 Hooks.on("createChatMessage", function (msg) {
-  if (!game.user.isGM || !msg.data.speaker.actor) return;
+  if (!game.user.isGM || !msg.data.speaker.actor || !game.settings.get("combatbooster", "enableHud")) return;
   const actor = game.actors.get(msg.data.speaker.actor);
   const itemName = msg.data.flavor;
   const item = actor.items.find((i) => i.name === itemName);
@@ -20,18 +20,17 @@ Hooks.on("createChatMessage", function (msg) {
 });
 
 Hooks.on("renderTokenHUD", function (HUD, html, data) {
+  if(!game.settings.get("combatbooster", "enableHud")) return;
   const actor = game.actors.get(data.actorId);
   let recentItems =
     actor.getFlag(COMBAT_BOOSTER_MODULE_NAME, "recentItems") || [];
-  const maxCol = 4;
-  let cols = recentItems.length > maxCol + 1 ? maxCol : recentItems.length;
-  let rows =
-    recentItems.length > maxCol + 1
-      ? Math.ceil(recentItems.length / maxCol)
-      : 1;
+  const maxCol = game.settings.get("combatbooster", "hudMaxCol") || HUD.object.data.width*2;
+  const maxEls = game.settings.get("combatbooster", "hudRecent");
+  let cols = recentItems.length > maxCol ? maxCol : recentItems.length;
   let recentItemsHtml = `<div class="combatHUD" style="width:${cols * 50}px;">`; //
   if (!actor || recentItems.length === 0) return;
-  for (let itemId of recentItems) {
+  for (let i = 0; i < Math.min(maxEls,recentItems.length); i++) {
+    let itemId = recentItems[i];
     let item = actor.items.find((i) => i.id === itemId);
     recentItemsHtml += `<div class="control-icon" name="CBHUDbtn" id="${item.name}">
                   <img src="${item.data.img}" width="36" height="36" title='${item.name}'></i>
