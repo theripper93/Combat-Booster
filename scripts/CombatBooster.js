@@ -1,6 +1,7 @@
-Hooks.on("updateToken",async function (token,updates){
+Hooks.on("updateActor",async function (actor,updates){
     if(game.combat?.started && game.user.isGM && game.settings.get("combatbooster", "markDefeated")){
-        if(updates.actorData?.data?.attributes?.hp?.value === 0){
+        let token = canvas.tokens.get(actor.parent.id)
+        if(updates.data?.attributes?.hp?.value === 0){
             for(let combatant of game.combat.combatants){
                 if(combatant.token.id === token.id){
                     await combatant.update({defeated:true})
@@ -19,7 +20,7 @@ Hooks.on("updateToken",async function (token,updates){
                     }
                 }
             }
-        }else if(updates.actorData?.data?.attributes?.hp?.value > 0){
+        }else if(updates.data?.attributes?.hp?.value > 0){
             for(let combatant of game.combat.combatants){
                 if(combatant.token.id === token.id && combatant.data.defeated){
                     await combatant.update({defeated:false})
