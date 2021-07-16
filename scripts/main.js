@@ -1,6 +1,8 @@
+const COMBAT_BOOSTER_MODULE_NAME = "combatbooster"
 
-
-Hooks.once("ready", async function () {});
+/***************
+ * TURN MARKER *
+ ***************/
 
 Hooks.on("canvasReady", function () {
   new TurnMarker();
@@ -21,3 +23,5 @@ Hooks.on("updateToken", function (token, updates) {
     }
   }
 });
+
+
