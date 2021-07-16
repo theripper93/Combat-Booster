@@ -22,7 +22,8 @@
       "./scripts/CombatBooster.js",
       "./scripts/TurnMarker.js",
       "./scripts/config.js",
-      "./scripts/CombatHud.js"
+      "./scripts/CombatHud.js",
+      "./scripts/Blood.js"
   ],
   "styles": [
       "./styles/CombatBooster.css"

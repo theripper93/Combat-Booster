@@ -5,8 +5,8 @@ class TurnMarker {
     this.container.name = "CBTurnMarker";
     this.container.zIndex = -1;
     this.img = game.settings.get("combatbooster", "markerPath");
-    this.speed = game.settings.get("combatbooster", "markerSpeed")/10;
-    this.scale = game.settings.get("combatbooster", "markerScale")/10;
+    this.speed = game.settings.get("combatbooster", "markerSpeed") / 10;
+    this.scale = game.settings.get("combatbooster", "markerScale") / 10;
     this.alpha = game.settings.get("combatbooster", "markerAlpha");
     this.sprite = new PIXI.Sprite.from(this.img);
     this.sprite.alpha = this.alpha;
@@ -21,9 +21,10 @@ class TurnMarker {
     function Animate() {
       if (_this.sprite._destroyed) {
         canvas.app.ticker.remove(Animate);
-        if(!_this.sprite.reallyDestroy)new TurnMarker();
+        if (!_this.sprite.reallyDestroy) new TurnMarker();
       } else {
-        if (_this.container.visible) _this.sprite.rotation += 0.01 * _this.speed;
+        if (_this.container.visible)
+          _this.sprite.rotation += 0.01 * _this.speed;
       }
     }
     canvas.tokens.CBTurnMarker = this;
@@ -34,22 +35,24 @@ class TurnMarker {
   }
   Move(token) {
     this.token = token;
-    if(!token) return
+    if (!token) return;
     token.addChild(this.container);
     this.Update();
   }
 
   Destroy(reallyDestroy) {
-    let child = this.token.children.find(c=> c.name === "CBTurnMarker")
+    if (this.token) {
+      let child = this.token.children.find((c) => c.name === "CBTurnMarker");
+      this.token.removeChild(child);
+    }
     this.sprite.reallyDestroy = reallyDestroy;
-    this.token.removeChild(child);
     this.sprite.destroy();
     this.container.destroy();
     canvas.tokens.CBTurnMarker = null;
   }
 
   Update() {
-    if(this.container._destroyed) return
+    if (this.container._destroyed) return;
     this.container.x = this.token.w / 2;
     this.container.y = this.token.h / 2;
     this.token.sortableChildren = true;

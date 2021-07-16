@@ -133,6 +133,39 @@ Hooks.once("init", function () {
     default: 4,
   });
 
+/**************************
+ * BLOODSPLATTER SETTINGS *
+ **************************/
+
+  game.settings.register("combatbooster", "enableBloodsplatter", {
+    name: game.i18n.localize("combatbooster.settings.enableBloodsplatter.text"),
+    hint: game.i18n.localize("combatbooster.settings.enableBloodsplatter.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+    onChange: function (sett) {
+      if (!sett && canvas.tokens.Bloodsplatter) {
+        canvas.tokens.Bloodsplatter.Destroy();
+      }
+    }
+  });
+
+  game.settings.register("combatbooster", "bloodsplatterThreshold", {
+    name: game.i18n.localize("combatbooster.settings.bloodsplatterThreshold.text"),
+    hint: game.i18n.localize("combatbooster.settings.bloodsplatterThreshold.hint"),
+    scope: "world",
+    config: true,
+    type: Number,
+    range: {
+      min: 0,
+      max: 100,
+      step: 1,
+
+    },
+    default: 50,
+  });
+
   /*****************
    * MISC SETTINGS *
    *****************/
