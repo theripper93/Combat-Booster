@@ -2,9 +2,9 @@ class BloodSplatter {
   constructor() {
     this.blood = new PIXI.Container();
     this.blood.name = "blood";
-    this.color = 0xff0000;
-    this.alpha = 1;
-    this.scaleMulti = 0.5;
+    this.color = "0x"+game.settings.get("combatbooster", "bloodColor").slice(1,7);
+    this.alpha = parseInt(game.settings.get("combatbooster", "bloodColor").slice(7), 16)/255;
+    this.scaleMulti = game.settings.get("combatbooster", "bloodsplatterScale");
     canvas.background.addChild(this.blood);
     canvas.background.BloodSplatter = this;
   }
@@ -35,6 +35,12 @@ class BloodSplatter {
     this.blood.destroy({ children: true, texture: true });
     canvas.background.BloodSplatter = null;
   }
+
+  Update(){
+    this.color = "0x"+game.settings.get("combatbooster", "bloodColor").slice(1,7);
+    this.alpha = parseInt(game.settings.get("combatbooster", "bloodColor").slice(7), 16)/255;
+    this.scaleMulti = game.settings.get("combatbooster", "bloodsplatterScale");
+  }
 }
 
 Hooks.on("updateActor", async function (actor, updates) {
@@ -52,6 +58,7 @@ Hooks.on("updateActor", async function (actor, updates) {
   ) {
     if (!canvas.background.BloodSplatter) {
       new BloodSplatter();
+      canvas.background.BloodSplatter.SplatFromToken(token);
     } else {
       canvas.background.BloodSplatter.SplatFromToken(token);
     }

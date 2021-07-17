@@ -163,7 +163,22 @@ Hooks.once("init", function () {
       step: 1,
 
     },
-    default: 50,
+    default: 0,
+  });
+
+  game.settings.register("combatbooster", "bloodsplatterScale", {
+    name: game.i18n.localize("combatbooster.settings.bloodsplatterScale.text"),
+    hint: game.i18n.localize("combatbooster.settings.bloodsplatterScale.hint"),
+    scope: "world",
+    config: true,
+    type: Number,
+    range: {
+      min: 0.1,
+      max: 2,
+      step: 0.1,
+
+    },
+    default: 0.5,
   });
 
   /*****************
@@ -187,4 +202,82 @@ Hooks.once("init", function () {
     type: Boolean,
     default: true,
   });
+
+  game.settings.register("combatbooster", "panCamera", {
+    name: game.i18n.localize("combatbooster.settings.panCamera.text"),
+    hint: game.i18n.localize("combatbooster.settings.panCamera.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+  });
+
+  game.settings.register("combatbooster", "controlToken", {
+    name: game.i18n.localize("combatbooster.settings.controlToken.text"),
+    hint: game.i18n.localize("combatbooster.settings.controlToken.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+  });
+
+  game.settings.register("combatbooster", "renderTokenHUD", {
+    name: game.i18n.localize("combatbooster.settings.renderTokenHUD.text"),
+    hint: game.i18n.localize("combatbooster.settings.renderTokenHUD.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+  });
+
+  game.settings.register("combatbooster", "soundPath", {
+    name: game.i18n.localize("combatbooster.settings.soundPath.name"),
+    hint: game.i18n.localize("combatbooster.settings.soundPath.hint"),
+    scope: "world",
+    config: true,
+    type: String,
+    default: "",
+    filePicker: true,
+  });
+
+  game.settings.register("combatbooster", "soundVolume", {
+    name: game.i18n.localize("combatbooster.settings.soundVolume.text"),
+    hint: game.i18n.localize("combatbooster.settings.soundVolume.hint"),
+    scope: "world",
+    config: true,
+    type: Number,
+    range: {
+      min: 0,
+      max: 1,
+      step: 0.1,
+
+    },
+    default: 0.4,
+  });
+
+  game.settings.register("combatbooster", "displayNotification", {
+    name: game.i18n.localize("combatbooster.settings.displayNotification.text"),
+    hint: game.i18n.localize("combatbooster.settings.displayNotification.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+  });
+
 });
+
+Hooks.once("ready", function () {
+  new window.Ardittristan.ColorSetting("combatbooster", "bloodColor", {
+    name: game.i18n.localize("combatbooster.settings.bloodColor.text"),
+    hint: game.i18n.localize("combatbooster.settings.bloodColor.hint"),
+    label: game.i18n.localize("combatbooster.settings.bloodColor.label"),
+    restricted: true,
+    defaultColor: "#ff0000",
+    scope: "world",
+    onChange: function () {
+      if (canvas.background.Bloodsplatter) {
+        canvas.background.Bloodsplatter.Update();
+      }
+    }
+  });
+  })
