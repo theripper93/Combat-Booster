@@ -29,17 +29,19 @@ class BloodSplatter {
 
   SplatFromToken(token) {
     const colorFlag = token.data.flags.combatbooster?.bloodColor
+    let colorData = {}
     if(!colorFlag && this.bloodSheet){
-      var {color, alpha} = this.ColorStringToHexAlpha(BloodSheet[token.actor?.data?.data?.details?.type?.custom || token.actor?.data?.data?.details?.type?.value])
+      const creatureType = token.actor?.data?.data?.details?.type?.custom || token.actor?.data?.data?.details?.type?.value
+      colorData = this.ColorStringToHexAlpha(BloodSheet[creatureType])
     }
     if(colorFlag){
-      var {color, alpha} = this.ColorStringToHexAlpha(colorFlag)
+      colorData = this.ColorStringToHexAlpha(colorFlag)
     }
     this.Splat(
       token.center,
       token.data.scale * Math.max(token.data.width, token.data.height),
-      color,
-      alpha
+      colorData?.color,
+      colorData?.alpha
     );
   }
 
@@ -58,7 +60,7 @@ class BloodSplatter {
     if(!colorString) return undefined;
     const color = "0x"+colorString.slice(1,7);
     const alpha = parseInt(colorString.slice(7), 16)/255;
-    return {color, alpha};
+    return {color:color, alpha:alpha};
   }
 }
 
