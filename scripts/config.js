@@ -272,7 +272,7 @@ Hooks.once("ready", function () {
     hint: game.i18n.localize("combatbooster.settings.bloodColor.hint"),
     label: game.i18n.localize("combatbooster.settings.bloodColor.label"),
     restricted: true,
-    defaultColor: "#ff0000",
+    defaultColor: "#a51414d8",
     scope: "world",
     onChange: function () {
       if (canvas.background.Bloodsplatter) {
