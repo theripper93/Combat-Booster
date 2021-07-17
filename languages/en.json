@@ -9,7 +9,7 @@
     "combatbooster.settings.markerScale.hint":"Scale multiplier for the turn marker",
     "combatbooster.settings.markerAlpha.text":"Turn Marker Transparency",
     "combatbooster.settings.markerAlpha.hint":"Transparency of the turn marker",
-    "combatbooster.settings.enableHud.text":"Enable Combat HUD",
+    "combatbooster.settings.enableHud.text":"Enable Combat HUD (dnd5e only)",
     "combatbooster.settings.enableHud.hint":"Display recent actions in the token hud",
     "combatbooster.settings.hudRecent.text":"Recent Items",
     "combatbooster.settings.hudRecent.hint":"How many recent items to display",
@@ -42,6 +42,10 @@
     "combatbooster.settings.bloodColor.label":"Color",
     "combatbooster.settings.useBloodsheet.text":"Automatic Blood Color",
     "combatbooster.settings.useBloodsheet.hint":"Change blood color depending on creature type",
+    "combatbooster.settings.currentHp.text":"Current HP",
+    "combatbooster.settings.currentHp.hint":"Data path for an actor's current hp",
+    "combatbooster.settings.maxHp.text":"Max HP",
+    "combatbooster.settings.maxHp.hint":"Data path for an actor's max hp",
 
     "combatbooster.yourTurn.text":"It's Your Turn!",
     "combatbooster.controls.clearBlood.name":"Clear Blood"

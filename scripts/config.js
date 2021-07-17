@@ -96,42 +96,46 @@ Hooks.once("init", function () {
    * COMBAT HUD SETTINGS *
    ***********************/
 
-  game.settings.register("combatbooster", "enableHud", {
-    name: game.i18n.localize("combatbooster.settings.enableHud.text"),
-    hint: game.i18n.localize("combatbooster.settings.enableHud.hint"),
-    scope: "world",
-    config: true,
-    type: Boolean,
-    default: true,
-  });
+  if(game.system.id == "dnd5e"){
 
-  game.settings.register("combatbooster", "hudRecent", {
-    name: game.i18n.localize("combatbooster.settings.hudRecent.text"),
-    hint: game.i18n.localize("combatbooster.settings.hudRecent.hint"),
-    scope: "world",
-    config: true,
-    type: Number,
-    range: {
-      min: 1,
-      max: 20,
-      step: 1,
-    },
-    default: 4,
-  });
+    game.settings.register("combatbooster", "enableHud", {
+      name: game.i18n.localize("combatbooster.settings.enableHud.text"),
+      hint: game.i18n.localize("combatbooster.settings.enableHud.hint"),
+      scope: "world",
+      config: true,
+      type: Boolean,
+      default: true,
+    });
+  
+    game.settings.register("combatbooster", "hudRecent", {
+      name: game.i18n.localize("combatbooster.settings.hudRecent.text"),
+      hint: game.i18n.localize("combatbooster.settings.hudRecent.hint"),
+      scope: "world",
+      config: true,
+      type: Number,
+      range: {
+        min: 1,
+        max: 20,
+        step: 1,
+      },
+      default: 4,
+    });
+  
+    game.settings.register("combatbooster", "hudMaxCol", {
+      name: game.i18n.localize("combatbooster.settings.hudMaxCol.text"),
+      hint: game.i18n.localize("combatbooster.settings.hudMaxCol.hint"),
+      scope: "world",
+      config: true,
+      type: Number,
+      range: {
+        min: 0,
+        max: 20,
+        step: 1,
+      },
+      default: 4,
+    });
+  }
 
-  game.settings.register("combatbooster", "hudMaxCol", {
-    name: game.i18n.localize("combatbooster.settings.hudMaxCol.text"),
-    hint: game.i18n.localize("combatbooster.settings.hudMaxCol.hint"),
-    scope: "world",
-    config: true,
-    type: Number,
-    range: {
-      min: 0,
-      max: 20,
-      step: 1,
-    },
-    default: 4,
-  });
 
 /**************************
  * BLOODSPLATTER SETTINGS *
@@ -271,6 +275,24 @@ Hooks.once("init", function () {
     config: true,
     type: Boolean,
     default: false,
+  });
+
+  game.settings.register("combatbooster", "currentHp", {
+    name: game.i18n.localize("combatbooster.settings.currentHp.text"),
+    hint: game.i18n.localize("combatbooster.settings.currentHp.hint"),
+    scope: "world",
+    config: true,
+    type: String,
+    default: "data.attributes.hp.value",
+  });
+
+  game.settings.register("combatbooster", "maxHp", {
+    name: game.i18n.localize("combatbooster.settings.maxHp.text"),
+    hint: game.i18n.localize("combatbooster.settings.maxHp.hint"),
+    scope: "world",
+    config: true,
+    type: String,
+    default: "data.attributes.hp.max",
   });
 
 });

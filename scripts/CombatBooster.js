@@ -1,3 +1,11 @@
+class CombatBooster{
+  static getHpVal(actorData){
+    return Object.byString(actorData, game.settings.get("combatbooster", "currentHp"))
+  }
+  static getHpMax(actorData){
+    return Object.byString(actorData, game.settings.get("combatbooster", "maxHp"))
+  }
+}
 Hooks.on("updateActor", async function (actor, updates) {
   if (
     game.combat?.started &&
@@ -9,7 +17,7 @@ Hooks.on("updateActor", async function (actor, updates) {
       ? canvas.tokens.get(actor.parent.id)
       : canvas.tokens.placeables.find((t) => t.actor.id == actor.id);
     if (!token) return;
-    if (updates.data?.attributes?.hp?.value === 0) {
+    if (CombatBooster.getHpVal(updates) === 0) {
       for (let combatant of game.combat.combatants) {
         if (combatant.token?.id === token.id) {
           await combatant.update({ defeated: true });
@@ -33,7 +41,7 @@ Hooks.on("updateActor", async function (actor, updates) {
           }
         }
       }
-    } else if (updates.data?.attributes?.hp?.value > 0) {
+    } else if (CombatBooster.getHpVal(updates) > 0) {
       for (let combatant of game.combat.combatants) {
         if (combatant.token?.id === token.id && combatant.data.defeated) {
           await combatant.update({ defeated: false });
@@ -83,3 +91,19 @@ Hooks.on("updateCombat", function (combat, updates) {
     }
   }
 });
+
+
+Object.byString = function (o, s) {
+  s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties
+  s = s.replace(/^\./, ""); // strip a leading dot
+  var a = s.split(".");
+  for (var i = 0, n = a.length; i < n; ++i) {
+    var k = a[i];
+    if (k in o) {
+      o = o[k];
+    } else {
+      return;
+    }
+  }
+  return o;
+};
