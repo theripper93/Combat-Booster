@@ -6,7 +6,7 @@ class TurnMarker {
     this.container.zIndex = -1;
     this.img = game.settings.get("combatbooster", "markerPath");
     this.speed = game.settings.get("combatbooster", "markerSpeed") / 10;
-    this.scale = game.settings.get("combatbooster", "markerScale") / 10;
+    this.scale = (canvas.dimensions.size/100)*game.settings.get("combatbooster", "markerScale") / 10;
     this.alpha = game.settings.get("combatbooster", "markerAlpha");
     this.sprite = new PIXI.Sprite.from(this.img);
     this.sprite.alpha = this.alpha;

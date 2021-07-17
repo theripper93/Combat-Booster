@@ -2,13 +2,13 @@ class BloodSplatter {
   constructor() {
     this.blood = new PIXI.Container();
     this.blood.name = "blood";
-    const { color, alpha } = this.ColorStringToHexAlpha(
+    const colorData = this.ColorStringToHexAlpha(
       game.settings.get("combatbooster", "bloodColor")
     );
-    this.color = color;
-    this.alpha = alpha;
+    this.color = colorData?.color;
+    this.alpha = colorData?.alpha;
     this.bloodSheet = game.settings.get("combatbooster", "useBloodsheet");
-    this.scaleMulti = game.settings.get("combatbooster", "bloodsplatterScale");
+    this.scaleMulti = (canvas.dimensions.size/100)*game.settings.get("combatbooster", "bloodsplatterScale");
     canvas.background.addChild(this.blood);
     canvas.background.BloodSplatter = this;
   }
@@ -58,11 +58,12 @@ class BloodSplatter {
   }
 
   Update() {
-    this.color =
-      "0x" + game.settings.get("combatbooster", "bloodColor").slice(1, 7);
-    this.alpha =
-      parseInt(game.settings.get("combatbooster", "bloodColor").slice(7), 16) /
-      255;
+    const colorData = this.ColorStringToHexAlpha(
+      game.settings.get("combatbooster", "bloodColor")
+    );
+    this.color = colorData?.color;
+    this.alpha = colorData?.alpha;
+    this.bloodSheet = game.settings.get("combatbooster", "useBloodsheet");
     this.scaleMulti = game.settings.get("combatbooster", "bloodsplatterScale");
   }
 
@@ -111,4 +112,9 @@ Hooks.on("getSceneControlButtons", (controls, b, c) => {
           canvas.background.BloodSplatter.Destroy();
       },
     });
+});
+
+Hooks.on("canvasReady", function () {
+    if (canvas.background.BloodSplatter)
+    canvas.background.BloodSplatter.Destroy();
 });

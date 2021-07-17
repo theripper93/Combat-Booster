@@ -149,8 +149,8 @@ Hooks.once("init", function () {
     type: Boolean,
     default: true,
     onChange: function (sett) {
-      if (!sett && canvas.tokens.Bloodsplatter) {
-        canvas.tokens.Bloodsplatter.Destroy();
+      if (!sett && canvas.background.BloodSplatter) {
+        canvas.background.BloodSplatter.Destroy();
       }
     }
   });
@@ -162,6 +162,11 @@ Hooks.once("init", function () {
     config: true,
     type: Boolean,
     default: true,
+    onChange: function () {
+      if (canvas.background.BloodSplatter) {
+        canvas.background.BloodSplatter.Update();
+      }
+    }
   });
 
   game.settings.register("combatbooster", "bloodsplatterThreshold", {
@@ -177,6 +182,11 @@ Hooks.once("init", function () {
 
     },
     default: 0,
+    onChange: function () {
+      if (canvas.background.BloodSplatter) {
+        canvas.background.BloodSplatter.Update();
+      }
+    }
   });
 
   game.settings.register("combatbooster", "bloodsplatterScale", {
@@ -192,6 +202,11 @@ Hooks.once("init", function () {
 
     },
     default: 0.5,
+    onChange: function () {
+      if (canvas.background.BloodSplatter) {
+        canvas.background.BloodSplatter.Update();
+      }
+    }
   });
 
   /*****************
