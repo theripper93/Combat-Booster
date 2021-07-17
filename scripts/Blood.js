@@ -2,14 +2,16 @@ class BloodSplatter {
   constructor() {
     this.blood = new PIXI.Container();
     this.blood.name = "blood";
-    this.color = "0x"+game.settings.get("combatbooster", "bloodColor").slice(1,7);
-    this.alpha = parseInt(game.settings.get("combatbooster", "bloodColor").slice(7), 16)/255;
+    const {color, alpha} = this.ColorStringToHexAlpha(game.settings.get("combatbooster", "bloodColor"))
+    this.color = color
+    this.alpha = alpha
+    this.bloodSheet = game.settings.get("combatbooster", "useBloodsheet");
     this.scaleMulti = game.settings.get("combatbooster", "bloodsplatterScale");
     canvas.background.addChild(this.blood);
     canvas.background.BloodSplatter = this;
   }
 
-  Splat(position, scale) {
+  Splat(position, scale, color,alpha) {
     let scaleRandom = 0.8+Math.random()*0.4
     let sprite = new PIXI.Sprite.from(
       `modules/combatbooster/bloodsplats/blood${Math.floor(
@@ -19,16 +21,25 @@ class BloodSplatter {
     sprite.anchor.set(0.5, 0.5);
     sprite.position.set(position.x, position.y);
     sprite.scale.set(scale * this.scaleMulti*scaleRandom, scale * this.scaleMulti*scaleRandom);
-    sprite.alpha = this.alpha;
-    sprite.tint = this.color;
+    sprite.alpha = alpha ?? this.alpha;
+    sprite.tint = color || this.color;
     sprite.rotation = Math.random() * Math.PI * 2;
     this.blood.addChild(sprite);
   }
 
   SplatFromToken(token) {
+    const colorFlag = token.data.flags.combatbooster?.bloodColor
+    if(!colorFlag && this.bloodSheet){
+      var {color, alpha} = this.ColorStringToHexAlpha(BloodSheet[token.actor?.data?.data?.details?.type?.custom || token.actor?.data?.data?.details?.type?.value])
+    }
+    if(colorFlag){
+      var {color, alpha} = this.ColorStringToHexAlpha(colorFlag)
+    }
     this.Splat(
       token.center,
-      token.data.scale * Math.max(token.data.width, token.data.height)
+      token.data.scale * Math.max(token.data.width, token.data.height),
+      color,
+      alpha
     );
   }
 
@@ -41,6 +52,13 @@ class BloodSplatter {
     this.color = "0x"+game.settings.get("combatbooster", "bloodColor").slice(1,7);
     this.alpha = parseInt(game.settings.get("combatbooster", "bloodColor").slice(7), 16)/255;
     this.scaleMulti = game.settings.get("combatbooster", "bloodsplatterScale");
+  }
+
+  ColorStringToHexAlpha(colorString){
+    if(!colorString) return undefined;
+    const color = "0x"+colorString.slice(1,7);
+    const alpha = parseInt(colorString.slice(7), 16)/255;
+    return {color, alpha};
   }
 }
 
@@ -76,7 +94,7 @@ Hooks.on("getSceneControlButtons", (controls, b, c) => {
       button:true,
       visible: game.user.isGM,
       onClick: () => {
-        canvas.background.BloodSplatter.Destroy();
+        if(canvas.background.BloodSplatter)canvas.background.BloodSplatter.Destroy();
       },
     });
 });

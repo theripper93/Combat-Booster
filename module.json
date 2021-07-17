@@ -23,6 +23,7 @@
       "./scripts/TurnMarker.js",
       "./scripts/config.js",
       "./scripts/CombatHud.js",
+      "./scripts/BloodSheet.js",
       "./scripts/Blood.js"
   ],
   "styles": [

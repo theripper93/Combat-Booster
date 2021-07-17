@@ -151,6 +151,15 @@ Hooks.once("init", function () {
     }
   });
 
+  game.settings.register("combatbooster", "useBloodsheet", {
+    name: game.i18n.localize("combatbooster.settings.useBloodsheet.text"),
+    hint: game.i18n.localize("combatbooster.settings.useBloodsheet.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+  });
+
   game.settings.register("combatbooster", "bloodsplatterThreshold", {
     name: game.i18n.localize("combatbooster.settings.bloodsplatterThreshold.text"),
     hint: game.i18n.localize("combatbooster.settings.bloodsplatterThreshold.hint"),

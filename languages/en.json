@@ -40,6 +40,8 @@
     "combatbooster.settings.bloodColor.text":"Blood Color",
     "combatbooster.settings.bloodColor.hint":"Color of the bloodsplats",
     "combatbooster.settings.bloodColor.label":"Color",
+    "combatbooster.settings.useBloodsheet.text":"Automatic Blood Color",
+    "combatbooster.settings.useBloodsheet.hint":"Change blood color depending on creature type",
 
     "combatbooster.yourTurn.text":"It's Your Turn!",
     "combatbooster.controls.clearBlood.name":"Clear Blood"
