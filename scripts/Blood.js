@@ -73,7 +73,29 @@ class BloodSplatter {
     const alpha = parseInt(colorString.slice(7), 16) / 255;
     return { color: color, alpha: alpha };
   }
+
+  static socketSplatFn(tokenId){
+    let token = canvas.tokens.get(tokenId)
+    if(!token) return;
+    if(canvas.background.BloodSplatter){
+        canvas.background.BloodSplatter.SplatFromToken(token)
+    }else{
+        new BloodSplatter()
+        canvas.background.BloodSplatter.SplatFromToken(token)
+    }
+  }
+
+  static socketSplat(token) {
+    BloodSplatterSocket.executeForEveryone("Splat", token.id);
+  }
 }
+
+let BloodSplatterSocket;
+
+Hooks.once("socketlib.ready", () => {
+	BloodSplatterSocket = socketlib.registerModule("combatbooster");
+	BloodSplatterSocket.register("Splat", BloodSplatter.socketSplatFn);
+});
 
 Hooks.on("updateActor", async function (actor, updates) {
   if (!game.settings.get("combatbooster", "enableBloodsplatter")) return;
@@ -106,7 +128,7 @@ Hooks.on("getSceneControlButtons", (controls, b, c) => {
       title: game.i18n.localize("combatbooster.controls.clearBlood.name"),
       icon: "fas fa-tint-slash",
       button: true,
-      visible: game.user.isGM,
+      visible: game.settings.get("combatbooster", "enableBloodsplatter"),
       onClick: () => {
         if (canvas.background.BloodSplatter)
           canvas.background.BloodSplatter.Destroy();
