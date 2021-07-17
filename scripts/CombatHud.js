@@ -3,7 +3,6 @@
  **************/
 
 Hooks.on("createChatMessage", function (msg) {
-  debugger
   if (!game.user.isGM || !msg.data.speaker.actor || !game.settings.get("combatbooster", "enableHud")) return;
   const actor = game.actors.get(msg.data.speaker.actor);
   const itemName = msg.data.flavor || msg.data.flags.betterrolls5e?.entries[0]?.title;
