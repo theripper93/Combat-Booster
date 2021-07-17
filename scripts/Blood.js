@@ -10,6 +10,7 @@ class BloodSplatter {
   }
 
   Splat(position, scale) {
+    let scaleRandom = 0.8+Math.random()*0.4
     let sprite = new PIXI.Sprite.from(
       `modules/combatbooster/bloodsplats/blood${Math.floor(
         Math.random() * 27
@@ -17,7 +18,7 @@ class BloodSplatter {
     );
     sprite.anchor.set(0.5, 0.5);
     sprite.position.set(position.x, position.y);
-    sprite.scale.set(scale * this.scaleMulti, scale * this.scaleMulti);
+    sprite.scale.set(scale * this.scaleMulti*scaleRandom, scale * this.scaleMulti*scaleRandom);
     sprite.alpha = this.alpha;
     sprite.tint = this.color;
     sprite.rotation = Math.random() * Math.PI * 2;
@@ -63,4 +64,19 @@ Hooks.on("updateActor", async function (actor, updates) {
       canvas.background.BloodSplatter.SplatFromToken(token);
     }
   }
+});
+
+Hooks.on("getSceneControlButtons", (controls, b, c) => {
+  controls
+    .find((c) => c.name == "token")
+    .tools.push({
+      name: "clearBlood",
+      title: game.i18n.localize("combatbooster.controls.clearBlood.name"),
+      icon: "fas fa-tint-slash",
+      button:true,
+      visible: game.user.isGM,
+      onClick: () => {
+        canvas.background.BloodSplatter.Destroy();
+      },
+    });
 });
