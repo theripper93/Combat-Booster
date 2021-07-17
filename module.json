@@ -30,6 +30,13 @@
       "./styles/CombatBooster.css"
   ],
   "packs": [
+    {
+        "name": "combatboostermacros",
+        "label": "Combat Booster Macros",
+        "path": "packs/macros.db",
+        "entity": "Macro",
+        "module": "combatbooster"
+    }
   ],
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.8",
