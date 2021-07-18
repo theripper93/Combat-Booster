@@ -35,17 +35,22 @@ Hooks.once("init", function () {
         game.settings.get("combatbooster", "hudMaxCol") ||
         HUD.object.data.width * 2;
       const maxEls = game.settings.get("combatbooster", "hudRecent");
-      let cols = recentItems.length > maxCol ? maxCol : recentItems.length;
+      let cols =
+        Math.min(maxEls, recentItems.length) > maxCol
+          ? maxCol
+          : Math.min(maxEls, recentItems.length);
       let recentItemsHtml = `<div class="combatHUD" style="width:${
-        cols * 50
-      }px;">`; //
+        cols * 55
+      }px;">`; 
       if (!actor || recentItems.length === 0) return;
       for (let i = 0; i < Math.min(maxEls, recentItems.length); i++) {
         let itemId = recentItems[i];
         let item = actor.items.find((i) => i.id === itemId);
-        recentItemsHtml += `<div class="control-icon" name="CBHUDbtn" id="${item.name}">
+        if (item) {
+          recentItemsHtml += `<div class="control-icon" name="CBHUDbtn" id="${item.name}">
                   <img src="${item.data.img}" width="36" height="36" title='${item.name}'></i>
                                   </div>`;
+        }
       }
       recentItemsHtml += `</div>`;
       const controlIcons = html.find(`div[class="col left"]`);
