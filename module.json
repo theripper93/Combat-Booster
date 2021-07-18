@@ -43,14 +43,5 @@
   "download": "https://github.com/theripper93/Combat-Booster/releases/latest/download/module.zip",
   "socket":true,
   "dependencies": [
-    {
-        "name": "socketlib"
-    },
-    {
-        "name": "colorsettings"
-    },
-    {
-        "name": "lib-wrapper"
-    }
   ]
 }
