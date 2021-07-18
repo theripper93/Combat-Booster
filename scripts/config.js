@@ -155,7 +155,7 @@ Hooks.once("init", function () {
     scope: "world",
     config: true,
     type: Boolean,
-    default: true,
+    default: false,
   });
 
   game.settings.register("combatbooster", "panCamera", {
