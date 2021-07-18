@@ -1,19 +1,19 @@
-## Combat Booster
-# Recent actions(dnd5e only) and Turn Marker
+# Combat Booster
+## Speed up your combat with Recent actions(dnd5e only), Turn Marker and other smaller tweaks
 
-# Recent actions
+## Recent actions
 
 Show the latest used actions, customize, how many, how many columns and more.
 
 ![image](https://user-images.githubusercontent.com/1346839/126052685-c18c89e3-f7d6-40c2-8474-7dca03e82edd.png)
 
-# Turn Marker
+## Turn Marker
 
 Show a turn marker on the current combatant, customize size, transparency, rotation - animated webms supported
 
 ![image](https://user-images.githubusercontent.com/1346839/126052699-a1f45875-104e-4bdb-bfdd-ecaafd901966.png)
 
-# Other Features
+## Other Features
 
 **Body Pile**: Pile dead npcs on the top left corner of the canvas or create a token named "pile" to pile them there
 
