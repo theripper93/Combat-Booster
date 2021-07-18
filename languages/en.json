@@ -27,11 +27,11 @@
     "combatbooster.settings.moveToPile.hint":"When an npc is defeated move it to the body pile. Top left corner by default - place a token named 'pile' anyware to pile the bodies there instead",
     "combatbooster.settings.panCamera.text":"Pan Camera",
     "combatbooster.settings.panCamera.hint":"Automatically pan camera to current combatant (GM only)",
-    "combatbooster.settings.controlToken.text":"Control Token",
-    "combatbooster.settings.controlToken.hint":"Control a token when it's their turn",
+    "combatbooster.settings.controlToken.text":"Auto-Select Token On Turn Start",
+    "combatbooster.settings.controlToken.hint":"Automatically select a token when it's their turn",
     "combatbooster.settings.renderTokenHUD.text":"Auto Enable HUD",
     "combatbooster.settings.renderTokenHUD.hint":"Enable a token's hud when it's their turn (GM only)",
-    "combatbooster.settings.soundPath.name":"Your Trun Sound",
+    "combatbooster.settings.soundPath.name":"Your Turn Sound",
     "combatbooster.settings.soundPath.hint":"Play this sound when it's a player's turn. Leave empty for no sound",
     "combatbooster.settings.soundVolume.text":"Sound Volume",
     "combatbooster.settings.soundVolume.hint":"Volume of the 'Your Turn' sound",
@@ -46,7 +46,17 @@
     "combatbooster.settings.currentHp.hint":"Data path for an actor's current hp",
     "combatbooster.settings.maxHp.text":"Max HP",
     "combatbooster.settings.maxHp.hint":"Data path for an actor's max hp",
+    "combatbooster.settings.creatureType.text":"Creature Type",
+    "combatbooster.settings.creatureType.hint":"Data path for an actor's creature type",
+    "combatbooster.settings.creatureTypeCustom.text":"Custom Creature Type",
+    "combatbooster.settings.creatureTypeCustom.hint":"Data path for an actor's custom creature type",
+    "combatbooster.settings.enableBloodTrail.text":"Blood Trail",
+    "combatbooster.settings.enableBloodTrail.hint":"Display a trail of blood behind the token",
 
     "combatbooster.yourTurn.text":"It's Your Turn!",
-    "combatbooster.controls.clearBlood.name":"Clear Blood"
+    "combatbooster.controls.clearBlood.name":"Clear Blood",
+    "combatbooster.controls.splatToken.name":"Bloodsplat Token",
+    "combatbooster.controls.splatToken.warn":"Please select one or more tokens",
+
+    "combatbooster.tokenconfig.bloodColor.name":"Blood Color"
 }

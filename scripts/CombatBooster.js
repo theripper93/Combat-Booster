@@ -5,6 +5,12 @@ class CombatBooster{
   static getHpMax(actorData){
     return Object.byString(actorData, game.settings.get("combatbooster", "maxHp"))
   }
+  static getCreatureType(actorData){
+    return Object.byString(actorData, game.settings.get("combatbooster", "creatureType"))
+  }
+  static getCreatureTypeCustom(actorData){
+    return Object.byString(actorData, game.settings.get("combatbooster", "creatureTypeCustom"))
+  }
 }
 Hooks.on("updateActor", async function (actor, updates) {
   if (

@@ -6,10 +6,20 @@ class TurnMarker {
     this.container.zIndex = -1;
     this.img = game.settings.get("combatbooster", "markerPath");
     this.speed = game.settings.get("combatbooster", "markerSpeed") / 10;
-    this.scale = (canvas.dimensions.size/100)*game.settings.get("combatbooster", "markerScale") / 10;
+    this.scale = game.settings.get("combatbooster", "markerScale");
     this.alpha = game.settings.get("combatbooster", "markerAlpha");
-    this.sprite = new PIXI.Sprite.from(this.img);
+    let video = this.img.endsWith("webm")
+      ? document.createElement("video")
+      : null;
+    if (video) {
+      video.src = this.img;
+      video.loop = true;
+    }
+    this.sprite = new PIXI.Sprite.from(video ?? this.img);
     this.sprite.alpha = this.alpha;
+    this.sprite.width=400
+    this.sprite.height=400
+    this.baseScale = this.sprite.scale.x
     this.sprite.anchor.set(0.5, 0.5);
     this.container.addChild(this.sprite);
     Object.defineProperty(this.container, "visible", {
@@ -29,9 +39,7 @@ class TurnMarker {
     }
     canvas.tokens.CBTurnMarker = this;
     canvas.app.ticker.add(Animate);
-    if (game.combat?.combatant?._token?._id) {
-      this.Move(canvas.tokens.get(game.combat.combatant._token._id));
-    }
+    this.MoveToCombatant();
   }
   Move(token) {
     this.token = token;
@@ -56,10 +64,8 @@ class TurnMarker {
     this.container.x = this.token.w / 2;
     this.container.y = this.token.h / 2;
     this.token.sortableChildren = true;
-    this.sprite.scale.set(
-      0.2 * this.scale * this.tokenScale,
-      0.2 * this.scale * this.tokenScale
-    );
+    this.sprite.width = canvas.dimensions.size * 1.4 * this.scale * this.tokenScale
+    this.sprite.height = canvas.dimensions.size * 1.4 * this.scale * this.tokenScale
   }
 
   MoveToCombatant() {

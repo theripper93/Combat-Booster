@@ -61,11 +61,11 @@ Hooks.once("init", function () {
     config: true,
     type: Number,
     range: {
-      min: 1,
-      max: 20,
-      step: 1,
+      min: 0.1,
+      max: 4,
+      step: 0.1,
     },
-    default: 7,
+    default: 1,
     onChange: function () {
       if (canvas.tokens.CBTurnMarker) {
         canvas.tokens.CBTurnMarker.Destroy();
@@ -155,6 +155,34 @@ Hooks.once("init", function () {
     }
   });
 
+  game.settings.register("combatbooster", "enableBloodTrail", {
+    name: game.i18n.localize("combatbooster.settings.enableBloodTrail.text"),
+    hint: game.i18n.localize("combatbooster.settings.enableBloodTrail.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+    onChange: function (sett) {
+      if(sett){
+        libWrapper.register(
+          "combatbooster",
+          "Token.prototype._onMovementFrame",
+          BloodSplatter.bloodTrail
+        );
+      }else{
+        libWrapper.unregister("combatbooster", "Token.prototype._onMovementFrame", false)
+      }
+    }
+  });
+
+  if(game.settings.get("combatbooster", "enableBloodTrail")===true){
+    libWrapper.register(
+    "combatbooster",
+    "Token.prototype._onMovementFrame",
+    BloodSplatter.bloodTrail
+  );
+}
+
   game.settings.register("combatbooster", "useBloodsheet", {
     name: game.i18n.localize("combatbooster.settings.useBloodsheet.text"),
     hint: game.i18n.localize("combatbooster.settings.useBloodsheet.hint"),
@@ -202,6 +230,38 @@ Hooks.once("init", function () {
 
     },
     default: 0.5,
+    onChange: function () {
+      if (canvas.background.BloodSplatter) {
+        canvas.background.BloodSplatter.Update();
+      }
+    }
+  });
+
+  game.settings.register("combatbooster", "creatureType", {
+    name: game.i18n.localize("combatbooster.settings.creatureType.text"),
+    hint: game.i18n.localize("combatbooster.settings.creatureType.hint"),
+    scope: "world",
+    config: true,
+    type: String,
+    default: "data.details.type.value",
+  });
+
+  game.settings.register("combatbooster", "creatureTypeCustom", {
+    name: game.i18n.localize("combatbooster.settings.creatureTypeCustom.text"),
+    hint: game.i18n.localize("combatbooster.settings.creatureTypeCustom.hint"),
+    scope: "world",
+    config: true,
+    type: String,
+    default: "data.details.type.custom",
+  });
+
+  game.settings.register("combatbooster", "BloodSheetData", {
+    name: "",
+    hint: "",
+    scope: "world",
+    config: false,
+    type: Object,
+    default: BloodSheet,
     onChange: function () {
       if (canvas.background.BloodSplatter) {
         canvas.background.BloodSplatter.Update();
@@ -327,3 +387,15 @@ Hooks.once("ready", function () {
     }
   });
   })
+
+  Hooks.on("renderTokenConfig", (app, html, data) => {
+    let bloodColor = app.object.getFlag("combatbooster", "bloodColor") || "";
+    let newHtml = `<div class="form-group">
+    <label>${game.i18n.localize("combatbooster.tokenconfig.bloodColor.name")}</label>
+    <input type="text" name="flags.combatbooster.bloodColor" is="colorpicker-input" data-responsive-color value="${bloodColor}">
+  </div> `;
+    const tinthtml = html.find('input[name="tint"]');
+    const formGroup = tinthtml.closest(".form-group");
+    formGroup.after(newHtml);
+    app.setPosition({ height: "auto" });
+  });
