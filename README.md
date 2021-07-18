@@ -1,7 +1,9 @@
 
 ## Licensing
 
-The included blueRunes image was created by Simone (Simone [UTC +2]#6710 on discord)
+The included Splatter font was created by [Codin Repsh]( https://www.dafont.com/profile.php?user=362757)
+
+The included blueRunes,tolkienmarker,italianpride images were created by Simone (Simone [UTC +2]#6710 on discord)
 
 The included rune style images are created by Rin (rin#0002 on Discord)
 
