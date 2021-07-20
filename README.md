@@ -25,7 +25,7 @@ The included blueRunes,tolkienmarker,italianpride images were created by Simone 
 
 The included rune style images are created by Rin (rin#0002 on Discord)
 
-The DoubleSquare images are created by Wassily  (Wassily #8035 on Discord) 
+The DoubleSquare,Darkest and darksign images are created by Wassily  (Wassily #8035 on Discord) 
 https://discord.gg/A59GAZwB9M
 https://www.patreon.com/JB2A
 
