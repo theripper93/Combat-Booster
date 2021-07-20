@@ -27,12 +27,10 @@
       "./scripts/CombatBooster.js",
       "./scripts/TurnMarker.js",
       "./scripts/config.js",
-      "./scripts/CombatHud.js",
-      "./scripts/ExtendedCombatHud.js"
+      "./scripts/CombatHud.js"
   ],
   "styles": [
-      "./styles/CombatBooster.css",
-      "./styles/ExtendedCombatHud.css"
+      "./styles/CombatBooster.css"
   ],
   "packs": [
   ],
