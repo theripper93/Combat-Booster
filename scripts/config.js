@@ -1,4 +1,0 @@
-Hooks.once("init", function () {
-
-
-});
