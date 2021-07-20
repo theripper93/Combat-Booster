@@ -1,0 +1,21 @@
+/*Container for the actor informations, a separate box on the left side*/
+.character-container{
+    margin: 0px;
+}
+/**/
+.actions-container{
+    margin-top: -5px;
+}
+
+.actions-container-bottom{
+    margin-top: -5px;
+}
+
+.action-element{
+    margin-top: -5px;
+}
+
+.action-indicator{
+    margin-top: -5px;
+}
+
