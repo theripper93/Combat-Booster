@@ -23,7 +23,9 @@
       "./scripts/ExtendedCombatHud.js"
   ],
   "styles": [
-      "./styles/ExtendedCombatHud.css"
+      "./styles/CombatHUD.css",
+      "./styles/ActionHUD.css",
+      "./styles/PortraitHUD.css"
   ],
   "packs": [
   ],
