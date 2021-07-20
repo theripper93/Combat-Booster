@@ -35,6 +35,8 @@
     "combatbooster.settings.currentHp.hint":"Percorso dati per i PF attuali di un personaggio",
     "combatbooster.settings.maxHp.text":"PF Massimi",
     "combatbooster.settings.maxHp.hint":"Percorso dati per i PF massimi di un personaggio",
+    "combatbooster.settings.markerAbove.name":"Indicatore di turno sopra il token",
+    "combatbooster.settings.markerAbove.hint":"Mostra l'indicatore di turno sopra il token invece che sotto",
 
     "combatbooster.yourTurn.text":"E' il Tuo Turno!"
 }

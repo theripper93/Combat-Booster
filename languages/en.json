@@ -35,6 +35,8 @@
     "combatbooster.settings.currentHp.hint":"Data path for an actor's current hp",
     "combatbooster.settings.maxHp.text":"Max HP",
     "combatbooster.settings.maxHp.hint":"Data path for an actor's max hp",
+    "combatbooster.settings.markerAbove.name":"Turn Marker Above",
+    "combatbooster.settings.markerAbove.hint":"Display turn marker above the token",
 
     "combatbooster.yourTurn.text":"It's Your Turn!"
 }
