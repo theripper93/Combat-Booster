@@ -40,7 +40,7 @@ Hooks.once("init", function () {
           ? maxCol
           : Math.min(maxEls, recentItems.length);
       let recentItemsHtml = `<div class="combatHUD" style="width:${
-        cols * 55
+        cols * 50
       }px;">`; 
       if (!actor || recentItems.length === 0) return;
       for (let i = 0; i < Math.min(maxEls, recentItems.length); i++) {
