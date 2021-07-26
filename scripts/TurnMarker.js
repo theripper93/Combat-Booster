@@ -29,7 +29,7 @@ class TurnMarker {
     });
     let _this = this;
     function Animate() {
-      if (_this.sprite._destroyed) {
+      if (_this.sprite._destroyed || !_this.sprite) {
         canvas.app.ticker.remove(Animate);
         if (!_this.sprite.reallyDestroy) new TurnMarker();
       } else {
