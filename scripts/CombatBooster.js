@@ -60,6 +60,7 @@ Hooks.on("updateActor", async function (actor, updates) {
 });
 
 Hooks.on("updateCombat", function (combat, updates) {
+  if(!game.combat?.started) return;
   if (game.user.isGM && "turn" in updates) {
     const token = canvas.tokens.get(combat.current.tokenId);
     if (game.settings.get("combatbooster", "panCamera")) {
