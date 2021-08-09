@@ -27,7 +27,7 @@ Hooks.once("init", function () {
     config: true,
     type: String,
     default: "modules/combatbooster/markers/tolkien_marker.png",
-    filePicker: true,
+    filePicker: "imagevideo",
     onChange: function () {
       if (canvas.tokens.CBTurnMarker) {
         canvas.tokens.CBTurnMarker.Destroy();
@@ -206,7 +206,7 @@ Hooks.once("init", function () {
     config: true,
     type: String,
     default: "",
-    filePicker: true,
+    filePicker: "audio",
   });
 
   game.settings.register("combatbooster", "soundVolume", {
