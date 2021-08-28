@@ -69,8 +69,12 @@ class TurnMarker {
   }
 
   MoveToCombatant() {
-    const combatant = canvas.tokens.get(game.combat?.combatant?._token?._id);
-    if (combatant && this.id !== combatant.id) this.Move(combatant);
+    const token = canvas.tokens.get(game.combat?.combatant?.token?.id);
+    if (token && this.id !== token.id) {
+      this.Move(token);
+    } else if (!token) {
+      this.Destroy(true);
+    }
   }
 
   get tokenScale() {

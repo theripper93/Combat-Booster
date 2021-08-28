@@ -65,22 +65,22 @@ Hooks.on("updateCombat", function (combat, updates) {
     const token = canvas.tokens.get(combat.current.tokenId);
     if (game.settings.get("combatbooster", "panCamera")) {
       canvas.animatePan({
-        x: token.center.x,
-        y: token.center.y,
+        x: token?.center.x,
+        y: token?.center.y,
         duration: 300,
       });
     }
     if (game.settings.get("combatbooster", "controlToken")) {
       canvas.tokens.releaseAll();
-      token.control();
+      token?.control();
     }
     if (game.settings.get("combatbooster", "renderTokenHUD")) {
-      token.layer.hud.bind(token);
+      token?.layer.hud.bind(token);
     }
   }
   if(!game.user.isGM && "turn" in updates) {
     const token = canvas.tokens.get(combat.current.tokenId);
-    if (token.isOwner) {
+    if (token?.isOwner) {
       const soundPath = game.settings.get("combatbooster", "soundPath")
       if(soundPath){
         AudioHelper.play(
