@@ -4,7 +4,7 @@ class TurnMarker {
     this.container = new PIXI.Container();
     this.container.name = "CBTurnMarker";
     this.container.zIndex = game.settings.get("combatbooster", "markerAbove") ? 1000:-1;
-    this.targetAbove = game.settings.get("combatbooster", "targetAbove");
+    this.targetAbove =game.settings.get("combatbooster", "targetAbove")
     this.img = game.settings.get("combatbooster", "markerPath");
     this.speed = game.settings.get("combatbooster", "markerSpeed") / 10;
     this.scale = game.settings.get("combatbooster", "markerScale");
@@ -46,7 +46,6 @@ class TurnMarker {
     this.token = token;
     if (!token) return;
     token.addChild(this.container);
-    if(this.targetAbove) token.target.zIndex = 100000;
     this.Update();
   }
 
@@ -66,13 +65,18 @@ class TurnMarker {
     this.container.x = this.token.w / 2;
     this.container.y = this.token.h / 2;
     this.token.sortableChildren = true;
+    if(this.targetAbove) this.token.target.zIndex = 100000;
     this.sprite.width = canvas.dimensions.size * 1.4 * this.scale * this.tokenScale
     this.sprite.height = canvas.dimensions.size * 1.4 * this.scale * this.tokenScale
   }
 
   MoveToCombatant() {
-    const combatant = canvas.tokens.get(game.combat?.combatant?._token?.id);
-    if (combatant && this.id !== combatant.id) this.Move(combatant);
+    const token = canvas.tokens.get(game.combat?.combatant?.token?.id);
+    if (token && this.id !== token.id) {
+      this.Move(token);
+    } else if (!token) {
+      this.Destroy(true);
+    }
   }
 
   get tokenScale() {
