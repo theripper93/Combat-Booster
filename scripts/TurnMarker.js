@@ -4,6 +4,7 @@ class TurnMarker {
     this.container = new PIXI.Container();
     this.container.name = "CBTurnMarker";
     this.container.zIndex = game.settings.get("combatbooster", "markerAbove") ? 1000:-1;
+    this.targetAbove = game.settings.get("combatbooster", "targetAbove");
     this.img = game.settings.get("combatbooster", "markerPath");
     this.speed = game.settings.get("combatbooster", "markerSpeed") / 10;
     this.scale = game.settings.get("combatbooster", "markerScale");
@@ -45,6 +46,7 @@ class TurnMarker {
     this.token = token;
     if (!token) return;
     token.addChild(this.container);
+    if(this.targetAbove) token.target.zIndex = 100000;
     this.Update();
   }
 
@@ -69,7 +71,7 @@ class TurnMarker {
   }
 
   MoveToCombatant() {
-    const combatant = canvas.tokens.get(game.combat?.combatant?._token?._id);
+    const combatant = canvas.tokens.get(game.combat?.combatant?._token?.id);
     if (combatant && this.id !== combatant.id) this.Move(combatant);
   }
 

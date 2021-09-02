@@ -106,6 +106,20 @@ Hooks.once("init", function () {
     },
   });
 
+  game.settings.register("combatbooster", "targetAbove", {
+    name: game.i18n.localize("combatbooster.settings.targetAbove.name"),
+    hint: game.i18n.localize("combatbooster.settings.targetAbove.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+    onChange: function () {
+      if (canvas.tokens.CBTurnMarker) {
+        canvas.tokens.CBTurnMarker.Destroy();
+      }
+    },
+  });
+
   /***********************
    * COMBAT HUD SETTINGS *
    ***********************/
