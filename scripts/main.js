@@ -34,3 +34,13 @@ Hooks.on("updateToken", function (token, updates) {
     }
   }
 });
+
+Hooks.on("updateCombatant", function () {
+  if (game.settings.get("combatbooster", "enableMarker")) {
+    if (!canvas.tokens.CBTurnMarker) {
+      new TurnMarker();
+    } else {
+      canvas.tokens.CBTurnMarker.MoveToCombatant();
+    }
+  }
+});
