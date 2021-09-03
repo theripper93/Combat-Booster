@@ -35,7 +35,7 @@ Hooks.on("updateToken", function (token, updates) {
   }
 });
 
-Hooks.on("updateCombatant", function () {
+Hooks.on("getSwadeCombatTrackerEntryContext", function () {
   if (game.settings.get("combatbooster", "enableMarker")) {
     if (!canvas.tokens.CBTurnMarker) {
       new TurnMarker();
