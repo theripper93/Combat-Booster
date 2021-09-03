@@ -40,6 +40,8 @@
     "combatbooster.settings.maxHp.hint":"Ruta que contiene los datos de los PV máximos del actor",
     "combatbooster.settings.markerAbove.name":"Marcador por encima",
     "combatbooster.settings.markerAbove.hint":"Muestra el marcador de turno por encima del icono",
+    "combatbooster.settings.targetAbove.name":"Señal de objetivo sobre el marcador",
+    "combatbooster.settings.targetAbove.hint":"Muestra la señal de objetivo sobre el marcador de turno",
 
     "combatbooster.yourTurn.text":"¡Es su turno!"
 }
