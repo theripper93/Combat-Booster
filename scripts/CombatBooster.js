@@ -63,6 +63,7 @@ Hooks.on("updateCombat", function (combat, updates) {
   if(!game.combat?.started) return;
   if (game.user.isGM && "turn" in updates) {
     const token = canvas.tokens.get(combat.current.tokenId);
+    const skip = token.actor?.hasPlayerOwner && game.settings.get("combatbooster", "ignorePlayer")
     if (game.settings.get("combatbooster", "panCamera")) {
       canvas.animatePan({
         x: token?.center.x,
@@ -70,7 +71,7 @@ Hooks.on("updateCombat", function (combat, updates) {
         duration: 300,
       });
     }
-    if (game.settings.get("combatbooster", "controlToken")) {
+    if (game.settings.get("combatbooster", "controlToken") && !skip) {
       canvas.tokens.releaseAll();
       token?.control();
     }

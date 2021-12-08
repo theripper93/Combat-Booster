@@ -23,6 +23,8 @@
     "combatbooster.settings.panCamera.hint":"Automatically pan camera to current combatant (GM only)",
     "combatbooster.settings.controlToken.text":"Auto-Select Token On Turn Start",
     "combatbooster.settings.controlToken.hint":"Automatically select a token when it's their turn",
+    "combatbooster.settings.ignorePlayer.text": "Ignore Player Tokens",
+    "combatbooster.settings.ignorePlayer.hint": "Ignore the player tokens when auto selecting",
     "combatbooster.settings.renderTokenHUD.text":"Auto Enable HUD",
     "combatbooster.settings.renderTokenHUD.hint":"Enable a token's hud when it's their turn (GM only)",
     "combatbooster.settings.soundPath.name":"Your Turn Sound",

@@ -204,6 +204,15 @@ Hooks.once("init", function () {
     default: false,
   });
 
+  game.settings.register("combatbooster", "ignorePlayer", {
+    name: game.i18n.localize("combatbooster.settings.ignorePlayer.text"),
+    hint: game.i18n.localize("combatbooster.settings.ignorePlayer.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+  });
+
   game.settings.register("combatbooster", "renderTokenHUD", {
     name: game.i18n.localize("combatbooster.settings.renderTokenHUD.text"),
     hint: game.i18n.localize("combatbooster.settings.renderTokenHUD.hint"),
