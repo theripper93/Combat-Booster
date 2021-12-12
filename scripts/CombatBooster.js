@@ -38,12 +38,13 @@ Hooks.on("updateActor", async function (actor, updates) {
               x = pileToken.x;
               y = pileToken.y;
             }
-            await token.update(
-              { overlayEffect: "icons/svg/skull.svg", x: x, y: y },
+            await token.document.update(
+              { overlayEffect: CONFIG.controlIcons.defeated, x: x, y: y },
               { animate: false }
             );
           } else {
-            await token.update({ overlayEffect: "icons/svg/skull.svg" });
+            game.combat?.active && await game.combat?.getCombatantByToken(token.id)?.update({defeated: active})
+            await token.document.update({ overlayEffect: CONFIG.controlIcons.defeated });
           }
         }
       }
@@ -51,8 +52,8 @@ Hooks.on("updateActor", async function (actor, updates) {
       for (let combatant of game.combat.combatants) {
         if (combatant.token?.id === token.id && combatant.data.defeated) {
           await combatant.update({ defeated: false });
-          if (token.data.overlayEffect == "icons/svg/skull.svg")
-            await token.update({ overlayEffect: "" });
+          if (token.data.overlayEffect == CONFIG.controlIcons.defeated)
+            await token.document.update({ overlayEffect: "" });
         }
       }
     }
@@ -63,7 +64,7 @@ Hooks.on("updateCombat", function (combat, updates) {
   if(!game.combat?.started) return;
   if (game.user.isGM && "turn" in updates) {
     const token = canvas.tokens.get(combat.current.tokenId);
-    const skip = token.actor?.hasPlayerOwner && game.settings.get("combatbooster", "ignorePlayer")
+    const skip = token?.actor?.hasPlayerOwner && game.settings.get("combatbooster", "ignorePlayer")
     if (game.settings.get("combatbooster", "panCamera")) {
       canvas.animatePan({
         x: token?.center.x,

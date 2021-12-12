@@ -4,7 +4,7 @@ class TurnMarker {
     this.container = new PIXI.Container();
     this.container.name = "CBTurnMarker";
     this.container.zIndex = game.settings.get("combatbooster", "markerAbove") ? 1000:-1;
-    this.targetAbove =game.settings.get("combatbooster", "targetAbove")
+    this.targetAbove = false;
     this.img = game.settings.get("combatbooster", "markerPath");
     this.speed = game.settings.get("combatbooster", "markerSpeed") / 10;
     this.scale = game.settings.get("combatbooster", "markerScale");

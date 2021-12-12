@@ -39,7 +39,7 @@
   ],
   "packs": [
   ],
-  "minimumCoreVersion": "0.8.6",
+  "minimumCoreVersion": "9",
   "compatibleCoreVersion": "9",
   "url": "https://github.com/theripper93/Combat-Booster",
   "manifest": "https://github.com/theripper93/Combat-Booster/releases/latest/download/module.json",
