@@ -26,6 +26,8 @@
     "combatbooster.settings.panCamera.hint":"Automáticamente enfoca al contendiente actual (solo GM)",
     "combatbooster.settings.controlToken.text":"Seleccionar icono al comienzo del turno",
     "combatbooster.settings.controlToken.hint":"Selecciona automáticamente un icono cuando sea su turno",
+    "combatbooster.settings.ignorePlayer.text": "Ignorar iconos del jugador",
+    "combatbooster.settings.ignorePlayer.hint": "Ignorar los iconos del jugador cuando se usa la autoselección",
     "combatbooster.settings.renderTokenHUD.text":"Habilitar HUD",
     "combatbooster.settings.renderTokenHUD.hint":"Habilita el HUD del icono cuando cuando sea su turno (solo GM)",
     "combatbooster.settings.soundPath.name":"Sonido de turno",
@@ -40,6 +42,8 @@
     "combatbooster.settings.maxHp.hint":"Ruta que contiene los datos de los PV máximos del actor",
     "combatbooster.settings.markerAbove.name":"Marcador por encima",
     "combatbooster.settings.markerAbove.hint":"Muestra el marcador de turno por encima del icono",
+    "combatbooster.settings.targetAbove.name":"Señal de objetivo sobre el marcador",
+    "combatbooster.settings.targetAbove.hint":"Muestra la señal de objetivo sobre el marcador de turno",
 
     "combatbooster.yourTurn.text":"¡Es su turno!"
 }
