@@ -21,7 +21,7 @@ Hooks.on("updateActor", async function (actor, updates) {
   ) {
     let token = actor.parent
       ? canvas.tokens.get(actor.parent.id)
-      : canvas.tokens.placeables.find((t) => t.actor.id == actor.id);
+      : canvas.tokens.placeables.find((t) => t?.actor?.id == actor?.id);
     if (!token) return;
     if (CombatBooster.getHpVal(updates) === 0) {
       for (let combatant of game.combat.combatants) {
