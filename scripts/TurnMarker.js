@@ -13,8 +13,10 @@ class TurnMarker {
       ? document.createElement("video")
       : null;
     if (video) {
+      video.muted = true;
       video.src = this.img;
       video.loop = true;
+      video.muted = true;
     }
     this.sprite = new PIXI.Sprite.from(video ?? this.img);
     this.sprite.alpha = this.alpha;
