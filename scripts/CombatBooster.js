@@ -27,10 +27,11 @@ Hooks.on("updateActor", async function (actor, updates) {
       for (let combatant of game.combat.combatants) {
         if (combatant.token?.id === token.id) {
           await combatant.update({ defeated: true });
+          let x = token.data.x;
+          let y = token.data.y;
+          
           if (game.settings.get("combatbooster", "moveToPile")) {
             canvas.tokens.get(token.id).release();
-            let x = 0;
-            let y = 0;
             let pileToken = canvas.tokens.placeables.find(
               (t) => t.name.toLowerCase() === "pile"
             );
@@ -38,22 +39,41 @@ Hooks.on("updateActor", async function (actor, updates) {
               x = pileToken.x;
               y = pileToken.y;
             }
-            await token.document.update(
-              { overlayEffect: CONFIG.controlIcons.defeated, x: x, y: y },
-              { animate: false }
-            );
-          } else {
-            game.combat?.active && await game.combat?.getCombatantByToken(token.id)?.update({defeated: active})
-            await token.document.update({ overlayEffect: CONFIG.controlIcons.defeated });
           }
+
+          await token.document.update(
+            {
+              overlayEffect: CONFIG.controlIcons.defeated,
+              x: x,
+              y: y 
+            },
+            { animate: false }
+          );
+          const deadEffect = CONFIG.statusEffects.find(e => e.id == CONFIG.Combat.defeatedStatusId);
+          await token.actor.createEmbeddedDocuments("ActiveEffect", [
+            {
+                "icon": deadEffect.icon,
+                "label": game.i18n.localize(deadEffect.label),
+                "flags": {
+                    "core": {
+                        "statusId": deadEffect.id,
+                        "overlay": true
+                    },
+                }
+            }
+          ])
         }
       }
     } else if (CombatBooster.getHpVal(updates) > 0) {
       for (let combatant of game.combat.combatants) {
         if (combatant.token?.id === token.id && combatant.data.defeated) {
           await combatant.update({ defeated: false });
-          if (token.data.overlayEffect == CONFIG.controlIcons.defeated)
+          if (token.data.overlayEffect == CONFIG.controlIcons.defeated){
             await token.document.update({ overlayEffect: "" });
+            const effectId = Array.from(token.actor.effects).find(e => e.getFlag("core", "statusId") == CONFIG.Combat.defeatedStatusId)?.id;
+            if(effectId) await token.actor.deleteEmbeddedDocuments("ActiveEffect", [effectId]);
+          }
+            
         }
       }
     }
