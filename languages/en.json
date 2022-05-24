@@ -20,7 +20,7 @@
     "combatbooster.settings.moveToPile.text":"Body Pile",
     "combatbooster.settings.moveToPile.hint":"When an npc is defeated move it to the body pile. Top left corner by default - place a token named 'pile' anywere to pile the bodies there instead",
     "combatbooster.settings.panCamera.text":"Pan Camera",
-    "combatbooster.settings.panCamera.hint":"Automatically pan camera to current combatant (GM only)",
+    "combatbooster.settings.panCamera.hint":"Automatically pan camera to current combatant (For Players, only pan on visible tokens)",
     "combatbooster.settings.controlToken.text":"Auto-Select Token On Turn Start",
     "combatbooster.settings.controlToken.hint":"Automatically select a token when it's their turn",
     "combatbooster.settings.ignorePlayer.text": "Ignore Player Tokens",

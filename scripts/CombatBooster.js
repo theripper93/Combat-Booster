@@ -102,6 +102,13 @@ Hooks.on("updateCombat", function (combat, updates) {
   }
   if(!game.user.isGM && "turn" in updates) {
     const token = canvas.tokens.get(combat.current.tokenId);
+    if (game.settings.get("combatbooster", "panCamera") && token.isVisible) {
+      canvas.animatePan({
+        x: token?.center.x,
+        y: token?.center.y,
+        duration: 300,
+      });
+    }
     if (token?.isOwner) {
       const soundPath = game.settings.get("combatbooster", "soundPath")
       if(soundPath){
