@@ -11,16 +11,16 @@ Hooks.once("init", function () {
       )
         return;
       const actor = game.actors.get(msg.data.speaker.actor);
-      const itemName =
-        msg.data.flavor || msg.data.flags.betterrolls5e?.entries[0]?.title;
-      const item = actor.items.find((i) => i.name === itemName);
-      if (!item) return;
+      const messageContent = $(msg.data.content);
+      if(!messageContent.length)return;
+      const itemId = messageContent[0].dataset?.itemId;
+      if (!itemId) return;
       let oldItemsIds =
         actor.getFlag(COMBAT_BOOSTER_MODULE_NAME, "recentItems") ?? [];
-      let newItemsIds = [item.id];
-      for (let itemId of oldItemsIds) {
-        if (itemId !== item.id) {
-          newItemsIds.push(itemId);
+      let newItemsIds = [itemId];
+      for (let itemIdo of oldItemsIds) {
+        if (itemIdo !== itemId) {
+          newItemsIds.push(itemIdo);
         }
       }
       actor.setFlag(COMBAT_BOOSTER_MODULE_NAME, "recentItems", newItemsIds);
