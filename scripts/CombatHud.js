@@ -4,26 +4,28 @@
 Hooks.once("init", function () {
   if (game.system.id == "dnd5e") {
     Hooks.on("createChatMessage", function (msg) {
-      if (
-        !game.user.isGM ||
-        !msg.data.speaker.actor ||
-        !game.settings.get("combatbooster", "enableHud")
-      )
-        return;
-      const actor = game.actors.get(msg.data.speaker.actor);
-      const messageContent = $(msg.data.content);
-      if(!messageContent.length)return;
-      const itemId = messageContent[0].dataset?.itemId;
-      if (!itemId) return;
-      let oldItemsIds =
-        actor.getFlag(COMBAT_BOOSTER_MODULE_NAME, "recentItems") ?? [];
-      let newItemsIds = [itemId];
-      for (let itemIdo of oldItemsIds) {
-        if (itemIdo !== itemId) {
-          newItemsIds.push(itemIdo);
+      try{
+        if (
+          !game.user.isGM ||
+          !msg.data.speaker.actor ||
+          !game.settings.get("combatbooster", "enableHud")
+        )
+          return;
+        const actor = game.actors.get(msg.data.speaker.actor);
+        const messageContent = $(msg.data.content);
+        if(!messageContent.length)return;
+        const itemId = messageContent[0].dataset?.itemId;
+        if (!itemId) return;
+        let oldItemsIds =
+          actor.getFlag(COMBAT_BOOSTER_MODULE_NAME, "recentItems") ?? [];
+        let newItemsIds = [itemId];
+        for (let itemIdo of oldItemsIds) {
+          if (itemIdo !== itemId) {
+            newItemsIds.push(itemIdo);
+          }
         }
-      }
-      actor.setFlag(COMBAT_BOOSTER_MODULE_NAME, "recentItems", newItemsIds);
+        actor.setFlag(COMBAT_BOOSTER_MODULE_NAME, "recentItems", newItemsIds);
+      }catch(e){}
     });
 
     Hooks.on("renderTokenHUD", function (HUD, html, data) {
