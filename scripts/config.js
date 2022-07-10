@@ -248,7 +248,7 @@ Hooks.once("init", function () {
     scope: "world",
     config: true,
     type: String,
-    default: "data.attributes.hp.value",
+    default: "attributes.hp.value",
   });
 
   game.settings.register("combatbooster", "maxHp", {
@@ -257,7 +257,7 @@ Hooks.once("init", function () {
     scope: "world",
     config: true,
     type: String,
-    default: "data.attributes.hp.max",
+    default: "attributes.hp.max",
   });
 
 });

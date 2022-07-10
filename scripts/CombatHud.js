@@ -7,12 +7,12 @@ Hooks.once("init", function () {
       try{
         if (
           !game.user.isGM ||
-          !msg.data.speaker.actor ||
+          !msg.speaker.actor ||
           !game.settings.get("combatbooster", "enableHud")
         )
           return;
-        const actor = game.actors.get(msg.data.speaker.actor);
-        const messageContent = $(msg.data.content);
+        const actor = game.actors.get(msg.speaker.actor);
+        const messageContent = $(msg.content);
         if(!messageContent.length)return;
         const itemId = messageContent[0].dataset?.itemId;
         if (!itemId) return;
@@ -35,7 +35,7 @@ Hooks.once("init", function () {
         actor.getFlag(COMBAT_BOOSTER_MODULE_NAME, "recentItems") || [];
       const maxCol =
         game.settings.get("combatbooster", "hudMaxCol") ||
-        HUD.object.data.width * 2;
+        HUD.object.document.width * 2;
       const maxEls = game.settings.get("combatbooster", "hudRecent");
       let cols =
         Math.min(maxEls, recentItems.length) > maxCol
@@ -50,7 +50,7 @@ Hooks.once("init", function () {
         let item = actor.items.find((i) => i.id === itemId);
         if (item) {
           recentItemsHtml += `<div class="control-icon" name="CBHUDbtn" id="${item.name}">
-                  <img src="${item.data.img}" width="36" height="36" title='${item.name}'></i>
+                  <img src="${item.img}" width="36" height="36" title='${item.name}'></i>
                                   </div>`;
         }
       }

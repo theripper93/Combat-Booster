@@ -3,7 +3,7 @@ class TurnMarker {
     this.token;
     this.container = new PIXI.Container();
     this.container.name = "CBTurnMarker";
-    this.container.zIndex = game.settings.get("combatbooster", "markerAbove") ? 1000:-1;
+    this.container.filters = game.settings.get("combatbooster", "markerAbove") ? [] : [canvas.interface.reverseMaskfilter];
     this.targetAbove = false;
     this.img = game.settings.get("combatbooster", "markerPath");
     this.speed = game.settings.get("combatbooster", "markerSpeed") / 10;
@@ -36,8 +36,10 @@ class TurnMarker {
         canvas.app.ticker.remove(Animate);
         if (!_this.sprite.reallyDestroy) new TurnMarker();
       } else {
-        if (_this.container.visible)
+        if (_this.container.visible){
+
           _this.sprite.rotation += 0.01 * _this.speed;
+        }
       }
     }
     canvas.tokens.CBTurnMarker = this;
@@ -47,7 +49,7 @@ class TurnMarker {
   Move(token) {
     this.token = token;
     if (!token) return;
-    token.addChild(this.container);
+    token.addChildAt(this.container, 0);
     this.Update();
   }
 
@@ -66,8 +68,6 @@ class TurnMarker {
     if (this.container._destroyed) return;
     this.container.x = this.token.w / 2;
     this.container.y = this.token.h / 2;
-    this.token.sortableChildren = true;
-    if(this.targetAbove) this.token.target.zIndex = 100000;
     this.sprite.width = canvas.dimensions.size * 1.4 * this.scale * this.tokenScale
     this.sprite.height = canvas.dimensions.size * 1.4 * this.scale * this.tokenScale
   }
@@ -83,8 +83,8 @@ class TurnMarker {
 
   get tokenScale() {
     return (
-      Math.max(this.token.data.width, this.token.data.height) *
-      this.token.data.scale
+      Math.max(this.token.document.width, this.token.document.height) *
+      ((this.token.document.texture.scaleX + this.token.document.texture.scaleY) / 2)
     );
   }
   get tokenId() {

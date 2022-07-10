@@ -1,15 +1,6 @@
 class CombatBooster{
   static getHpVal(actorData){
-    return Object.byString(actorData, game.settings.get("combatbooster", "currentHp"))
-  }
-  static getHpMax(actorData){
-    return Object.byString(actorData, game.settings.get("combatbooster", "maxHp"))
-  }
-  static getCreatureType(actorData){
-    return Object.byString(actorData, game.settings.get("combatbooster", "creatureType"))
-  }
-  static getCreatureTypeCustom(actorData){
-    return Object.byString(actorData, game.settings.get("combatbooster", "creatureTypeCustom"))
+    return Object.byString(actorData.system, game.settings.get("combatbooster", "currentHp"))
   }
 }
 Hooks.on("updateActor", async function (actor, updates) {
@@ -27,8 +18,8 @@ Hooks.on("updateActor", async function (actor, updates) {
       for (let combatant of game.combat.combatants) {
         if (combatant.token?.id === token.id) {
           await combatant.update({ defeated: true });
-          let x = token.data.x;
-          let y = token.data.y;
+          let x = token.document.x;
+          let y = token.document.y;
           
           if (game.settings.get("combatbooster", "moveToPile")) {
             canvas.tokens.get(token.id).release();
@@ -38,6 +29,9 @@ Hooks.on("updateActor", async function (actor, updates) {
             if (pileToken) {
               x = pileToken.x;
               y = pileToken.y;
+            }else{
+              x = 0;
+              y = 0;
             }
           }
 
@@ -66,9 +60,9 @@ Hooks.on("updateActor", async function (actor, updates) {
       }
     } else if (CombatBooster.getHpVal(updates) > 0) {
       for (let combatant of game.combat.combatants) {
-        if (combatant.token?.id === token.id && combatant.data.defeated) {
+        if (combatant.token?.id === token.id && combatant.document.defeated) {
           await combatant.update({ defeated: false });
-          if (token.data.overlayEffect == CONFIG.controlIcons.defeated){
+          if (token.document.overlayEffect == CONFIG.controlIcons.defeated){
             await token.document.update({ overlayEffect: "" });
             const effectId = Array.from(token.actor.effects).find(e => e.getFlag("core", "statusId") == CONFIG.Combat.defeatedStatusId)?.id;
             if(effectId) await token.actor.deleteEmbeddedDocuments("ActiveEffect", [effectId]);
