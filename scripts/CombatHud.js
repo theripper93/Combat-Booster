@@ -24,7 +24,9 @@ Hooks.once("init", function () {
             newItemsIds.push(itemIdo);
           }
         }
-        actor.setFlag(COMBAT_BOOSTER_MODULE_NAME, "recentItems", newItemsIds);
+        setTimeout(() => {
+          actor.setFlag(COMBAT_BOOSTER_MODULE_NAME, "recentItems", newItemsIds);
+        }, 2000)
       }catch(e){}
     });
 

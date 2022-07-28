@@ -43,7 +43,7 @@ Hooks.on("updateActor", async function (actor, updates) {
             },
             { animate: false }
           );
-          const deadEffect = CONFIG.statusEffects.find(e => e.id == CONFIG.Combat.defeatedStatusId);
+          const deadEffect = CONFIG.statusEffects.find(e => e.id == CONFIG.specialStatusEffects.DEFEATED);
           await token.actor.createEmbeddedDocuments("ActiveEffect", [
             {
                 "icon": deadEffect.icon,
@@ -64,7 +64,7 @@ Hooks.on("updateActor", async function (actor, updates) {
           await combatant.update({ defeated: false });
           if (token.document.overlayEffect == CONFIG.controlIcons.defeated){
             await token.document.update({ overlayEffect: "" });
-            const effectId = Array.from(token.actor.effects).find(e => e.getFlag("core", "statusId") == CONFIG.Combat.defeatedStatusId)?.id;
+            const effectId = Array.from(token.actor.effects).find(e => e.getFlag("core", "statusId") == CONFIG.specialStatusEffects.DEFEATED)?.id;
             if(effectId) await token.actor.deleteEmbeddedDocuments("ActiveEffect", [effectId]);
           }
             
