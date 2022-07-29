@@ -104,17 +104,6 @@ Hooks.on("updateCombat", function (combat, updates) {
       });
     }
     if (token?.isOwner) {
-      const soundPath = game.settings.get("combatbooster", "soundPath")
-      if(soundPath){
-        AudioHelper.play(
-          {
-            src: soundPath,
-            volume: game.settings.get("combatbooster", "soundVolume"),
-            loop: false,
-          },
-          false
-        );
-      }
       if(game.settings.get("combatbooster", "displayNotification")){
         ui.notifications.info(game.i18n.localize("combatbooster.yourTurn.text"))
       }

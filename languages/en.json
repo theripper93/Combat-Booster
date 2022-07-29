@@ -42,5 +42,7 @@
     "combatbooster.settings.targetAbove.name":"Target Pips always above marker",
     "combatbooster.settings.targetAbove.hint":"Display target pips above the turn marker",
 
-    "combatbooster.yourTurn.text":"It's Your Turn!"
+    "combatbooster.yourTurn.text":"It's Your Turn!",
+
+    "combatbooster.settings.combatsounds.default":"Combat Booster"
 }

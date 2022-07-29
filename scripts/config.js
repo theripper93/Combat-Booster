@@ -1,4 +1,19 @@
 Hooks.once("init", function () {
+
+  CONFIG.Combat.sounds["combatbooster"] = {
+    label: "combatbooster.settings.combatsounds.default",
+    startEncounter: [
+      "modules/combatbooster/sounds/round.ogg",
+    ],
+    nextUp: [
+      "modules/combatbooster/sounds/next.ogg",
+    ],
+    yourTurn: [
+      "modules/combatbooster/sounds/turn.ogg",
+    ]
+  }
+
+
   /*******************
    * MARKER SETTINGS *
    *******************/
@@ -206,31 +221,6 @@ Hooks.once("init", function () {
     config: true,
     type: Boolean,
     default: false,
-  });
-
-  game.settings.register("combatbooster", "soundPath", {
-    name: game.i18n.localize("combatbooster.settings.soundPath.name"),
-    hint: game.i18n.localize("combatbooster.settings.soundPath.hint"),
-    scope: "world",
-    config: true,
-    type: String,
-    default: "",
-    filePicker: "audio",
-  });
-
-  game.settings.register("combatbooster", "soundVolume", {
-    name: game.i18n.localize("combatbooster.settings.soundVolume.text"),
-    hint: game.i18n.localize("combatbooster.settings.soundVolume.hint"),
-    scope: "world",
-    config: true,
-    type: Number,
-    range: {
-      min: 0,
-      max: 1,
-      step: 0.1,
-
-    },
-    default: 0.4,
   });
 
   game.settings.register("combatbooster", "displayNotification", {
