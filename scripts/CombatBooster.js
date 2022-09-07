@@ -60,7 +60,7 @@ Hooks.on("updateActor", async function (actor, updates) {
       }
     } else if (CombatBooster.getHpVal(updates) > 0) {
       for (let combatant of game.combat.combatants) {
-        if (combatant.token?.id === token.id && combatant.document.defeated) {
+        if (combatant.token?.id === token.id && combatant.defeated) {
           await combatant.update({ defeated: false });
           if (token.document.overlayEffect == CONFIG.controlIcons.defeated){
             await token.document.update({ overlayEffect: "" });
