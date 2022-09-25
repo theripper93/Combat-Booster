@@ -2,10 +2,9 @@ class TurnMarker {
   constructor() {
     this.token;
     this.container = new PIXI.Container();
-    this.container.name = "CBTurnMarker";
     this.container.filters = game.settings.get("combatbooster", "markerAbove") ? [] : [canvas.interface.reverseMaskfilter];
     this.targetAbove = false;
-    this.img = game.settings.get("combatbooster", "markerPath");
+    this.img = this.markerImg;
     this.speed = game.settings.get("combatbooster", "markerSpeed") / 10;
     this.scale = game.settings.get("combatbooster", "markerScale");
     this.alpha = game.settings.get("combatbooster", "markerAlpha");
@@ -30,11 +29,17 @@ class TurnMarker {
         return game.combat?.started;
       },
     });
+    this.setGlobal();
+    this.setAnimation();
+    this.MoveToCombatant();
+  }
+
+  setAnimation(){
     let _this = this;
     function Animate() {
       if (_this.sprite._destroyed || !_this.sprite) {
         canvas.app.ticker.remove(Animate);
-        if (!_this.sprite.reallyDestroy) new TurnMarker();
+        if (!_this.sprite.reallyDestroy) new _this.TM_Class();
       } else {
         if (_this.container.visible){
 
@@ -42,10 +47,26 @@ class TurnMarker {
         }
       }
     }
-    canvas.tokens.CBTurnMarker = this;
     canvas.app.ticker.add(Animate);
-    this.MoveToCombatant();
   }
+
+  get markerImg(){
+    return game.settings.get("combatbooster", "markerPath");
+  }
+
+  get TM_Class() {
+    return TurnMarker
+  }
+
+  get containerName() {
+    return "CBTurnMarker";
+  }
+
+  setGlobal(){
+    this.container.name = this.containerName;
+    canvas.tokens.CBTurnMarker = this;
+  }
+
   Move(token) {
     this.token = token;
     if (!token) return;
@@ -55,7 +76,7 @@ class TurnMarker {
 
   Destroy(reallyDestroy) {
     if (this.token) {
-      let child = this.token.children.find((c) => c.name === "CBTurnMarker");
+      let child = this.token.children.find((c) => c.name === this.containerName);
       this.token.removeChild(child);
     }
     this.sprite.reallyDestroy = reallyDestroy;
@@ -89,5 +110,99 @@ class TurnMarker {
   }
   get tokenId() {
     return this.token?.id;
+  }
+}
+
+class NextTurnMarker extends TurnMarker{
+
+  constructor() {
+    super();
+    const colormatrix = new PIXI.filters.ColorMatrixFilter();
+    colormatrix.sepia();
+    this.container.alpha = 0.5;
+    this.container.filters.push(colormatrix);
+  }
+
+  setGlobal(){
+    this.container.name = this.containerName;
+    canvas.tokens.CBNextTurnMarker = this;
+  }
+
+  get containerName() {
+    return "CBNextTurnMarker";
+  }
+
+  get TM_Class() {
+    return NextTurnMarker
+  }
+  MoveToCombatant() {
+    const token = canvas.tokens.get(game.combat?.nextCombatant?.token?.id);
+    if (token && this.id !== token.id) {
+      this.Move(token);
+    } else if (!token) {
+      this.Destroy(true);
+    }
+  }
+}
+
+class StartTurnMarker extends TurnMarker{
+
+  constructor() {
+    super();
+    this.container.alpha = 0.5;
+    this._visible = false;
+    const _this = this;
+    Object.defineProperty(this.container, "visible", {
+      get() {
+        return game.combat?.started && (_this._visible || this.token?.isOwner);
+      },
+    });
+  }
+
+  get markerImg(){
+    return game.settings.get("combatbooster", "startMarkerPath");
+  }
+
+  setGlobal(){
+    this.container.name = this.containerName;
+    canvas.tokens.CBStartTurnMarker = this;
+  }
+
+  setAnimation(){
+    let _this = this;
+    function Animate() {
+      if (_this.sprite._destroyed || !_this.sprite) {
+        canvas.app.ticker.remove(Animate);
+        if (!_this.sprite.reallyDestroy) new _this.TM_Class();
+      }
+    }
+    canvas.app.ticker.add(Animate);
+  }
+
+  Move(token){
+    this.token = token;
+    if (!token) return;
+    canvas.primary.addChild(this.container);
+    this.Update();
+    this.container.x = token.center.x;
+    this.container.y = token.center.y;
+    this._visible = token.isVisible;
+  }
+
+  get containerName() {
+    return "CBStartTurnMarker";
+  }
+
+  get TM_Class() {
+    return NextTurnMarker
+  }
+
+  MoveToCombatant() {
+    const token = canvas.tokens.get(game.combat?.combatant?.token?.id);
+    if (token && this.id !== token.id) {
+      this.Move(token);
+    } else if (!token) {
+      this.Destroy(true);
+    }
   }
 }

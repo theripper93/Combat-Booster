@@ -1,5 +1,11 @@
 Hooks.once("init", function () {
 
+  function refreshMarkers(sett){
+    canvas.tokens?.CBTurnMarker?.Destroy(sett);
+    canvas.tokens?.CBNextTurnMarker?.Destroy(sett);
+    canvas.tokens?.CBStartTurnMarker?.Destroy(sett);
+  }
+
   CONFIG.Combat.sounds["combatbooster"] = {
     label: "combatbooster.settings.combatsounds.default",
     startEncounter: [
@@ -27,10 +33,44 @@ Hooks.once("init", function () {
     default: true,
     onChange: function (sett) {
       if (canvas.tokens.CBTurnMarker) {
-        canvas.tokens.CBTurnMarker.Destroy(!sett);
+        refreshMarkers(!sett);
       }
       if(sett){
         new TurnMarker();
+      }
+    },
+  });
+
+  game.settings.register("combatbooster", "enableNextMarker", {
+    name: game.i18n.localize("combatbooster.settings.enableNextMarker.text"),
+    hint: game.i18n.localize("combatbooster.settings.enableNextMarker.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+    onChange: function (sett) {
+      if (canvas.tokens.CBNextTurnMarker) {
+        refreshMarkers(!sett);
+      }
+      if(sett){
+        new NextTurnMarker();
+      }
+    },
+  });
+
+  game.settings.register("combatbooster", "enableStartMarker", {
+    name: game.i18n.localize("combatbooster.settings.enableStartMarker.text"),
+    hint: game.i18n.localize("combatbooster.settings.enableStartMarker.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+    onChange: function (sett) {
+      if (canvas.tokens.CBStartTurnMarker) {
+        refreshMarkers(!sett);
+      }
+      if(sett){
+        new StartTurnMarker();
       }
     },
   });
@@ -44,9 +84,20 @@ Hooks.once("init", function () {
     default: "modules/combatbooster/markers/tolkien_marker.png",
     filePicker: "imagevideo",
     onChange: function () {
-      if (canvas.tokens.CBTurnMarker) {
-        canvas.tokens.CBTurnMarker.Destroy();
-      }
+      refreshMarkers();
+    },
+  });
+
+  game.settings.register("combatbooster", "startMarkerPath", {
+    name: game.i18n.localize("combatbooster.settings.startMarkerPath.name"),
+    hint: game.i18n.localize("combatbooster.settings.startMarkerPath.hint"),
+    scope: "world",
+    config: true,
+    type: String,
+    default: "modules/combatbooster/markers/BlackCross.png",
+    filePicker: "imagevideo",
+    onChange: function () {
+      refreshMarkers();
     },
   });
 
@@ -63,9 +114,7 @@ Hooks.once("init", function () {
     },
     default: 10,
     onChange: function () {
-      if (canvas.tokens.CBTurnMarker) {
-        canvas.tokens.CBTurnMarker.Destroy();
-      }
+      refreshMarkers();
     },
   });
 
@@ -82,9 +131,7 @@ Hooks.once("init", function () {
     },
     default: 1,
     onChange: function () {
-      if (canvas.tokens.CBTurnMarker) {
-        canvas.tokens.CBTurnMarker.Destroy();
-      }
+      refreshMarkers();
     },
   });
 
@@ -101,9 +148,7 @@ Hooks.once("init", function () {
     },
     default: 1,
     onChange: function () {
-      if (canvas.tokens.CBTurnMarker) {
-        canvas.tokens.CBTurnMarker.Destroy();
-      }
+      refreshMarkers();
     },
   });
 
@@ -115,9 +160,7 @@ Hooks.once("init", function () {
     type: Boolean,
     default: false,
     onChange: function () {
-      if (canvas.tokens.CBTurnMarker) {
-        canvas.tokens.CBTurnMarker.Destroy();
-      }
+      refreshMarkers();
     },
   });
 
