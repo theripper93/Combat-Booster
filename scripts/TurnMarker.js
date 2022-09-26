@@ -1,8 +1,10 @@
 class TurnMarker {
   constructor() {
+    if(canvas.tokens[this.containerName] && !canvas.tokens[this.containerName].container.destroyed) canvas.tokens[this.containerName].Destroy(true);
     this.token;
     this.container = new PIXI.Container();
     this.container.filters = game.settings.get("combatbooster", "markerAbove") ? [] : [canvas.interface.reverseMaskfilter];
+    if(this.filter) this.container.filters.push(this.filter);
     this.targetAbove = false;
     this.img = this.markerImg;
     this.speed = game.settings.get("combatbooster", "markerSpeed") / 10;
@@ -50,6 +52,8 @@ class TurnMarker {
     canvas.app.ticker.add(Animate);
   }
 
+  get filter(){}
+
   get markerImg(){
     return game.settings.get("combatbooster", "markerPath");
   }
@@ -82,7 +86,7 @@ class TurnMarker {
     this.sprite.reallyDestroy = reallyDestroy;
     this.sprite.destroy();
     this.container.destroy();
-    canvas.tokens.CBTurnMarker = null;
+    canvas.tokens[this.containerName] = null;
   }
 
   Update() {
@@ -94,6 +98,7 @@ class TurnMarker {
   }
 
   MoveToCombatant() {
+    if(this.container.destroyed) return;
     const token = canvas.tokens.get(game.combat?.combatant?.token?.id);
     if (token && this.id !== token.id) {
       this.Move(token);
@@ -117,15 +122,18 @@ class NextTurnMarker extends TurnMarker{
 
   constructor() {
     super();
-    const colormatrix = new PIXI.filters.ColorMatrixFilter();
-    colormatrix.sepia();
     this.container.alpha = 0.5;
-    this.container.filters.push(colormatrix);
   }
 
   setGlobal(){
     this.container.name = this.containerName;
     canvas.tokens.CBNextTurnMarker = this;
+  }
+
+  get filter(){
+    const colormatrix = new PIXI.filters.ColorMatrixFilter();
+    colormatrix.sepia();
+    return colormatrix;
   }
 
   get containerName() {
@@ -136,6 +144,7 @@ class NextTurnMarker extends TurnMarker{
     return NextTurnMarker
   }
   MoveToCombatant() {
+    if(this.container.destroyed) return;
     const token = canvas.tokens.get(game.combat?.nextCombatant?.token?.id);
     if (token && this.id !== token.id) {
       this.Move(token);
@@ -149,6 +158,7 @@ class StartTurnMarker extends TurnMarker{
 
   constructor() {
     super();
+    if(this.container.destroyed) return;
     this.container.alpha = 0.5;
     this._visible = false;
     const _this = this;

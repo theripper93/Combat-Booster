@@ -7,6 +7,17 @@ const COMBAT_BOOSTER_MODULE_NAME = "combatbooster";
 //icons permission jinker, brimcon Wassily hobolyra cefasheli 
 //no permissions Rin 
 
+function regenerateMarkers(){
+  if(!game.combat?.started) return;
+  if(!game.settings.get("combatbooster", "enableMarker")) return;
+  if(!canvas.tokens.CBTurnMarker) new TurnMarker();
+  if(!canvas.tokens.CBStartTurnMarker && game.settings.get("combatbooster", "enableStartMarker")) new StartTurnMarker();
+  if(!canvas.tokens.CBNextTurnMarker && game.settings.get("combatbooster", "enableNextMarker")) new NextTurnMarker();
+  canvas.tokens.CBTurnMarker?.MoveToCombatant();
+  canvas.tokens.CBStartTurnMarker?.MoveToCombatant();
+  canvas.tokens.CBNextTurnMarker?.MoveToCombatant();
+}
+
 Hooks.on("canvasReady", function () {
   if (game.settings.get("combatbooster", "enableMarker")) {
     new TurnMarker();
@@ -26,17 +37,7 @@ Hooks.on("canvasReady", function () {
 });
 
 Hooks.on("updateCombat", function () {
-  if (game.settings.get("combatbooster", "enableMarker")) {
-    if (!canvas.tokens.CBTurnMarker) {
-      new TurnMarker();
-      if (game.settings.get("combatbooster", "enableNextMarker")) {
-        new NextTurnMarker();
-      }
-    } else {
-      canvas.tokens.CBTurnMarker.MoveToCombatant();
-      canvas.tokens.CBNextTurnMarker?.MoveToCombatant()
-    }
-  }
+  regenerateMarkers();
 });
 
 Hooks.on("updateToken", function (token, updates) {
@@ -49,14 +50,20 @@ Hooks.on("updateToken", function (token, updates) {
   }
 });
 
+Hooks.on("deleteToken", (token) => {
+  regenerateMarkers();
+});
+
 Hooks.on("combatTurn", () => {
   Hooks.once("updateCombat", () => {
     canvas.tokens.CBStartTurnMarker?.MoveToCombatant()
+    canvas.tokens.CBNextTurnMarker?.MoveToCombatant()
   });
 })
 Hooks.on("combatRound", () => {
   Hooks.once("updateCombat", () => {
     canvas.tokens.CBStartTurnMarker?.MoveToCombatant()
+    canvas.tokens.CBNextTurnMarker?.MoveToCombatant()
   });
 })
  
