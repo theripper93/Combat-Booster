@@ -110,7 +110,7 @@ class TurnMarker {
   get tokenScale() {
     return (
       Math.max(this.token.document.width, this.token.document.height) *
-      ((this.token.document.texture.scaleX + this.token.document.texture.scaleY) / 2)
+      ((Math.abs(this.token.document.texture.scaleX) + Math.abs(this.token.document.texture.scaleY)) / 2)
     );
   }
   get tokenId() {
