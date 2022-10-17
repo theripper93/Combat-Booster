@@ -29,10 +29,11 @@ Hooks.on("canvasReady", function () {
       new NextTurnMarker();
     }
     Hooks.once("renderCombatTracker", function () {
+      regenerateMarkers();
       if(canvas.tokens.CBTurnMarker && !canvas.tokens.CBTurnMarker.token)
       canvas.tokens.CBTurnMarker.MoveToCombatant()
       canvas.tokens.CBNextTurnMarker?.MoveToCombatant()
-    })
+    });
   }
 });
 

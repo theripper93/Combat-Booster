@@ -164,6 +164,18 @@ Hooks.once("init", function () {
     },
   });
 
+  game.settings.register("combatbooster", "markerIgnoreScale", {
+    name: game.i18n.localize("combatbooster.settings.markerIgnoreScale.name"),
+    hint: game.i18n.localize("combatbooster.settings.markerIgnoreScale.hint"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+    onChange: function () {
+      refreshMarkers();
+    },
+  });
+
   /***********************
    * COMBAT HUD SETTINGS *
    ***********************/

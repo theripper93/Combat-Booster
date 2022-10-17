@@ -10,6 +10,7 @@ class TurnMarker {
     this.speed = game.settings.get("combatbooster", "markerSpeed") / 10;
     this.scale = game.settings.get("combatbooster", "markerScale");
     this.alpha = game.settings.get("combatbooster", "markerAlpha");
+    this.ignoreScale = game.settings.get("combatbooster", "markerIgnoreScale");
     let video = this.img.endsWith("webm")
       ? document.createElement("video")
       : null;
@@ -108,10 +109,14 @@ class TurnMarker {
   }
 
   get tokenScale() {
-    return (
-      Math.max(this.token.document.width, this.token.document.height) *
-      ((Math.abs(this.token.document.texture.scaleX) + Math.abs(this.token.document.texture.scaleY)) / 2)
-    );
+    if(this.ignoreScale){
+      return Math.max(this.token.document.width, this.token.document.height);
+    }else{
+      return (
+        Math.max(this.token.document.width, this.token.document.height) *
+        ((Math.abs(this.token.document.texture.scaleX) + Math.abs(this.token.document.texture.scaleY)) / 2)
+      );
+    }
   }
   get tokenId() {
     return this.token?.id;
