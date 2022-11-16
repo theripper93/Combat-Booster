@@ -37,7 +37,7 @@ class TurnMarker {
     this.MoveToCombatant();
   }
 
-  setAnimation(){
+  setAnimation(dt){
     let _this = this;
     function Animate() {
       if (_this.sprite._destroyed || !_this.sprite) {
@@ -45,8 +45,12 @@ class TurnMarker {
         if (!_this.sprite.reallyDestroy) new _this.TM_Class();
       } else {
         if (_this.container.visible){
-
-          _this.sprite.rotation += 0.01 * _this.speed;
+          let delta = 0.01 * _this.speed;
+          try {
+              _this.sprite.rotation += (delta * dt);
+          } catch (err) {
+              // skip frames
+          }
         }
       }
     }
