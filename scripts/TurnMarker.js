@@ -39,14 +39,13 @@ class TurnMarker {
 
   setAnimation(){
     let _this = this;
-    function Animate() {
+    function Animate(dt) {
       if (_this.sprite._destroyed || !_this.sprite) {
         canvas.app.ticker.remove(Animate);
         if (!_this.sprite.reallyDestroy) new _this.TM_Class();
       } else {
         if (_this.container.visible){
-
-          _this.sprite.rotation += 0.01 * _this.speed;
+          _this.sprite.rotation += 0.01 * _this.speed * dt;
         }
       }
     }
