@@ -7,8 +7,7 @@ Hooks.on("updateActor", async function (actor, updates) {
   if (
     game.combat?.started &&
     game.user.isGM &&
-    actor.type == "npc" &&
-    game.settings.get("combatbooster", "markDefeated")
+    !actor.hasPlayerOwner
   ) {
     let token = actor.parent
       ? canvas.tokens.get(actor.parent.id)
@@ -17,7 +16,7 @@ Hooks.on("updateActor", async function (actor, updates) {
     if (CombatBooster.getHpVal(updates) === 0) {
       for (let combatant of game.combat.combatants) {
         if (combatant.token?.id === token.id) {
-          await combatant.update({ defeated: true });
+          if (game.settings.get("combatbooster", "markDefeated") && !combatant.defeated) await CombatTracker.prototype._onToggleDefeatedStatus(combatant)
           let x = token.document.x;
           let y = token.document.y;
           
@@ -37,37 +36,17 @@ Hooks.on("updateActor", async function (actor, updates) {
 
           await token.document.update(
             {
-              overlayEffect: CONFIG.controlIcons.defeated,
               x: x,
               y: y 
             },
             { animate: false }
           );
-          const deadEffect = CONFIG.statusEffects.find(e => e.id == CONFIG.specialStatusEffects.DEFEATED);
-          await token.actor.createEmbeddedDocuments("ActiveEffect", [
-            {
-                "icon": deadEffect.icon,
-                "label": game.i18n.localize(deadEffect.label),
-                "flags": {
-                    "core": {
-                        "statusId": deadEffect.id,
-                        "overlay": true
-                    },
-                }
-            }
-          ])
         }
       }
     } else if (CombatBooster.getHpVal(updates) > 0) {
       for (let combatant of game.combat.combatants) {
         if (combatant.token?.id === token.id && combatant.defeated) {
-          await combatant.update({ defeated: false });
-          if (token.document.overlayEffect == CONFIG.controlIcons.defeated){
-            await token.document.update({ overlayEffect: "" });
-            const effectId = Array.from(token.actor.effects).find(e => e.getFlag("core", "statusId") == CONFIG.specialStatusEffects.DEFEATED)?.id;
-            if(effectId) await token.actor.deleteEmbeddedDocuments("ActiveEffect", [effectId]);
-          }
-            
+          await CombatTracker.prototype._onToggleDefeatedStatus(combatant);      
         }
       }
     }
