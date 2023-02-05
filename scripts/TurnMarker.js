@@ -166,6 +166,7 @@ class StartTurnMarker extends TurnMarker{
     this.container.alpha = 0.5;
     this._visible = false;
     const _this = this;
+    this._currentPosition = {x:0,y:0}
     Object.defineProperty(this.container, "visible", {
       get() {
         return game.combat?.started && (_this._visible || this.token?.isOwner);
@@ -200,7 +201,17 @@ class StartTurnMarker extends TurnMarker{
     this.Update();
     this.container.x = token.center.x;
     this.container.y = token.center.y;
+    this._currentPosition = {x:token.center.x,y:token.center.y}
     this._visible = token.isVisible;
+  }
+
+  Update() { 
+    super.Update();
+    canvas.primary.addChild(this.container);
+    if (this._currentPosition) {
+        this.container.x = this._currentPosition.x;
+        this.container.y = this._currentPosition.y;
+    }
   }
 
   get containerName() {
