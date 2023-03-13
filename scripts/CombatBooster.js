@@ -4,90 +4,91 @@ class CombatBooster{
   }
 }
 Hooks.on("updateActor", async function (actor, updates) {
-  if (
-    game.combat?.started &&
-    game.user.isGM &&
-    !actor.hasPlayerOwner
-  ) {
-    let token = actor.parent
-      ? canvas.tokens.get(actor.parent.id)
-      : canvas.tokens.placeables.find((t) => t?.actor?.id == actor?.id);
-    if (!token) return;
-    if (CombatBooster.getHpVal(updates) === 0) {
-      for (let combatant of game.combat.combatants) {
-        if (combatant.token?.id === token.id) {
-          if (game.settings.get("combatbooster", "markDefeated") && !combatant.defeated) await CombatTracker.prototype._onToggleDefeatedStatus(combatant)
-          let x = token.document.x;
-          let y = token.document.y;
-          
-          if (game.settings.get("combatbooster", "moveToPile")) {
-            canvas.tokens.get(token.id).release();
-            let pileToken = canvas.tokens.placeables.find(
-              (t) => t.name.toLowerCase() === "pile"
-            );
-            if (pileToken) {
-              x = pileToken.x;
-              y = pileToken.y;
-            }else{
-              x = 0;
-              y = 0;
-            }
-          }
+  try {
+    if (game.combat?.started && game.user.isGM && !actor.hasPlayerOwner) {
+        let token = actor.parent ? canvas.tokens.get(actor.parent.id) : canvas.tokens.placeables.find((t) => t?.actor?.id == actor?.id);
+        if (!token) return;
+        if (CombatBooster.getHpVal(updates) === 0) {
+            for (let combatant of game.combat.combatants) {
+                if (combatant.token?.id === token.id) {
+                    if (game.settings.get("combatbooster", "markDefeated") && !combatant.defeated) await CombatTracker.prototype._onToggleDefeatedStatus(combatant);
+                    let x = token.document.x;
+                    let y = token.document.y;
+                    if (game.settings.get("combatbooster", "moveToPile")) {
+                        canvas.tokens.get(token.id).release();
+                        let pileToken = canvas.tokens.placeables.find((t) => t.name.toLowerCase() === "pile");
+                        if (pileToken) {
+                            x = pileToken.x;
+                            y = pileToken.y;
+                        } else {
+                            x = 0;
+                            y = 0;
+                        }
+                    }
 
-          await token.document.update(
-            {
-              x: x,
-              y: y 
-            },
-            { animate: false }
-          );
+                    await token.document.update(
+                        {
+                            x: x,
+                            y: y,
+                        },
+                        { animate: false },
+                    );
+                }
+            }
+        } else if (CombatBooster.getHpVal(updates) > 0) {
+            for (let combatant of game.combat.combatants) {
+                if (combatant.token?.id === token.id && combatant.defeated) {
+                    await CombatTracker.prototype._onToggleDefeatedStatus(combatant);
+                }
+            }
         }
-      }
-    } else if (CombatBooster.getHpVal(updates) > 0) {
-      for (let combatant of game.combat.combatants) {
-        if (combatant.token?.id === token.id && combatant.defeated) {
-          await CombatTracker.prototype._onToggleDefeatedStatus(combatant);      
-        }
-      }
     }
+  } catch (error) {
+    
   }
+  
 });
 
 Hooks.on("updateCombat", function (combat, updates) {
-  if(!game.combat?.started) return;
-  if (game.user.isGM && "turn" in updates) {
-    const token = canvas.tokens.get(combat.current.tokenId);
-    const skip = token?.actor?.hasPlayerOwner && game.settings.get("combatbooster", "ignorePlayer")
-    if (game.settings.get("combatbooster", "panCamera")) {
-      canvas.animatePan({
-        x: token?.center.x,
-        y: token?.center.y,
-        duration: 300,
-      });
+  try {
+    if (!game.combat?.started) return;
+    if (game.user.isGM && "turn" in updates) {
+        const token = canvas.tokens.get(combat.current.tokenId);
+        const skip = token?.actor?.hasPlayerOwner && game.settings.get("combatbooster", "ignorePlayer");
+        if (game.settings.get("combatbooster", "panCamera")) {
+            canvas.animatePan({
+                x: token?.center.x,
+                y: token?.center.y,
+                duration: 300,
+            });
+        }
+        if (game.settings.get("combatbooster", "controlToken") && !skip) {
+            canvas.tokens.releaseAll();
+            token?.control();
+        }
+        if (game.settings.get("combatbooster", "renderTokenHUD")) {
+            token?.layer.hud.bind(token);
+        }
     }
-    if (game.settings.get("combatbooster", "controlToken") && !skip) {
-      canvas.tokens.releaseAll();
-      token?.control();
+    if (!game.user.isGM && "turn" in updates) {
+        const token = canvas.tokens.get(combat.current.tokenId);
+        if (game.settings.get("combatbooster", "panCamera") && token.isVisible) {
+            canvas.animatePan({
+                x: token?.center.x,
+                y: token?.center.y,
+                duration: 300,
+            });
+        }
+        if (token?.isOwner) {
+            if (game.settings.get("combatbooster", "displayNotification")) {
+                ui.notifications.info(game.i18n.localize("combatbooster.yourTurn.text"));
+            }
+        }
     }
-    if (game.settings.get("combatbooster", "renderTokenHUD")) {
-      token?.layer.hud.bind(token);
-    }
+  } catch (error) {
+    
   }
-  if(!game.user.isGM && "turn" in updates) {
-    const token = canvas.tokens.get(combat.current.tokenId);
-    if (game.settings.get("combatbooster", "panCamera") && token.isVisible) {
-      canvas.animatePan({
-        x: token?.center.x,
-        y: token?.center.y,
-        duration: 300,
-      });
-    }
-    if (token?.isOwner) {
-      if(game.settings.get("combatbooster", "displayNotification")){
-        ui.notifications.info(game.i18n.localize("combatbooster.yourTurn.text"))
-      }
-    }
-  }
+  
 });
 
 
