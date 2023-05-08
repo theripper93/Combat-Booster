@@ -69,18 +69,21 @@ Hooks.on("combatRound", () => {
 })
  
 Hooks.on("getSwadeCombatTrackerEntryContext", function () {
-  if (game.settings.get("combatbooster", "enableMarker")) {
-    if (!canvas.tokens.CBTurnMarker) {
-      new TurnMarker();
-      if (game.settings.get("combatbooster", "enableNextMarker")) {
-        new NextTurnMarker();
+  try {    
+    if (game.settings.get("combatbooster", "enableMarker")) {
+      if (!canvas.tokens.CBTurnMarker) {
+        new TurnMarker();
+        if (game.settings.get("combatbooster", "enableNextMarker")) {
+          new NextTurnMarker();
+        }
+        if (game.settings.get("combatbooster", "enableStartMarker")) {
+          new StartTurnMarker();
+        }
+      } else {
+        canvas.tokens.CBTurnMarker.MoveToCombatant();
+        canvas.tokens.CBNextTurnMarker?.MoveToCombatant()
       }
-      if (game.settings.get("combatbooster", "enableStartMarker")) {
-        new StartTurnMarker();
-      }
-    } else {
-      canvas.tokens.CBTurnMarker.MoveToCombatant();
-      canvas.tokens.CBNextTurnMarker?.MoveToCombatant()
     }
+  }catch (error) {
   }
 });
