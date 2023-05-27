@@ -20,7 +20,7 @@ class TurnMarker {
       video.loop = true;
       video.muted = true;
     }
-    this.sprite = new PIXI.Sprite.from(video ?? this.img);
+    this.sprite = PIXI.Sprite.from(video ?? this.img);
     this.sprite.alpha = this.alpha;
     this.sprite.width=400
     this.sprite.height=400
