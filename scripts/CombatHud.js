@@ -65,7 +65,7 @@ Hooks.once("init", function () {
       $(".combatHUD").css({ left: diff });
       $(html.find(`div[name="CBHUDbtn"]`)).on("click", test);
       function test() {
-        game.dnd5e.rollItemMacro(this.id);
+        dnd5e.documents.macro.rollItem(this.id);
       }
     });
   }
