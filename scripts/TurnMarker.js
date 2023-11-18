@@ -148,8 +148,30 @@ class NextTurnMarker extends TurnMarker{
     return NextTurnMarker
   }
   MoveToCombatant() {
-    if(this.container.destroyed) return;
-    const token = canvas.tokens.get(game.combat?.nextCombatant?.token?.id);
+    if (this.container.destroyed) return;
+    const combat = game.combat;
+    if (!combat) return this.Destroy(true);
+
+    const skip = combat.settings.skipDefeated;
+    let next = null;
+    const turn = combat.turn ?? -1;
+    const combatantsCount = combat.turns.length;
+    const doubleCombatantsArray = [...combat.turns, ...combat.turns];
+    if (skip) {
+      for(let i = turn + 1; i < combatantsCount * 2; i++){
+        if(!doubleCombatantsArray[i].defeated) {
+          next = i;
+          break;
+        }
+      }
+    } else {
+      next = (turn + 1);
+    }
+
+    next = next % combatantsCount;
+
+
+    const token = combat.turns[next]?.token?.object;
     if (token && this.id !== token.id) {
       this.Move(token);
     } else if (!token) {
