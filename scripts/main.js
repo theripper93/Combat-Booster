@@ -43,7 +43,7 @@ Hooks.on("updateCombat", function () {
 
 Hooks.on("updateToken", function (token, updates) {
   if (token.id === canvas.tokens.CBTurnMarker?.token?.id) {
-    if ("texture" in updates) {
+    if ("texture" in updates || "width" in updates || "height" in updates) {
       canvas.tokens.CBTurnMarker.Update();
       canvas.tokens.CBNextTurnMarker?.Update()
       canvas.tokens.CBStartTurnMarker?.Update()
