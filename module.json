@@ -47,7 +47,7 @@
   "socket": true,
   "id": "combatbooster",
   "compatibility": {
-    "minimum": "11",
-    "verified": "11"
+    "minimum": "12",
+    "verified": "12"
   }
 }

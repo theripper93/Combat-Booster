@@ -3,8 +3,7 @@ class TurnMarker {
         if (canvas.tokens[this.containerName] && !canvas.tokens[this.containerName].container.destroyed) canvas.tokens[this.containerName].Destroy(true);
         this.token;
         this.container = new PIXI.Container();
-        this.container.filters = game.settings.get("combatbooster", "markerAbove") ? [] : [canvas.interface.reverseMaskfilter];
-        if (this.filter) this.container.filters.push(this.filter);
+        this.markerAbove = game.settings.get("combatbooster", "markerAbove");
         this.targetAbove = false;
         this.img = this.markerImg;
         this.speed = game.settings.get("combatbooster", "markerSpeed") / 10;
@@ -72,7 +71,7 @@ class TurnMarker {
     Move(token) {
         this.token = token;
         if (!token) return;
-        token.addChildAt(this.container, 0);
+        this.markerAbove ? token.addChild(this.container) : token.addChildAt(this.container, 0);
         this.Update();
     }
 
