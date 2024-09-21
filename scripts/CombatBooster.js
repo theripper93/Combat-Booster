@@ -11,15 +11,15 @@ Hooks.on("updateActor", async function (actor, updates) {
         if (!token || !combatant) return;
         const hp = CombatBooster.getHpVal(updates);
         if (hp === 0) {
-            if (!combatant.defeated && game.settings.get("combatbooster", "markDefeated")) await combatant.toggleDefeated();
+            if (!combatant.defeated && game.settings.get("combatbooster", "markDefeated")) await ui.combat._onToggleDefeatedStatus(combatant);
             if (game.settings.get("combatbooster", "moveToPile")) {
-                token.release();
+                token.object?.release();
                 const pileToken = canvas.tokens.placeables.find((t) => t.name.toLowerCase() === "pile");
                 const { x, y } = pileToken ? pileToken.document : { x: 0, y: 0 };
                 await token.update({ x, y }, { animate: false });
             }
         } else if (hp > 0 && game.settings.get("combatbooster", "markDefeated")) {
-            if (combatant.defeated) await combatant.toggleDefeated();
+            if (combatant.defeated) await ui.combat._onToggleDefeatedStatus(combatant);
         }
     } catch (error) {
     }
