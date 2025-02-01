@@ -2,8 +2,8 @@ class TurnMarker {
     constructor() {
         if (canvas.tokens[this.containerName] && !canvas.tokens[this.containerName].container.destroyed) canvas.tokens[this.containerName].Destroy(true);
         this.token;
-      this.container = new PIXI.Container();
-      if(this.filter) this.container.filters = [this.filter];
+        this.container = new PIXI.Container();
+        if (this.filter) this.container.filters = [this.filter];
         this.markerAbove = game.settings.get("combatbooster", "markerAbove");
         this.targetAbove = false;
         this.img = this.markerImg;
