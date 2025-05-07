@@ -21,31 +21,49 @@ Hooks.once("init", function () {
     Hooks.on("renderTokenHUD", function (HUD, html, data) {
         if (!game.settings.get("combatbooster", "enableHud")) return;
         const actor = game.actors.get(data.actorId);
+        if (!actor) return;
+    
         let recentItems = actor.getFlag(COMBAT_BOOSTER_MODULE_NAME, "recentItems") || [];
+        if (recentItems.length === 0) return;
+    
         const maxCol = game.settings.get("combatbooster", "hudMaxCol") || HUD.object.document.width * 2;
         const maxEls = game.settings.get("combatbooster", "hudRecent");
         let cols = Math.min(maxEls, recentItems.length) > maxCol ? maxCol : Math.min(maxEls, recentItems.length);
-        let recentItemsHtml = `<div class="combatHUD" style="width:${cols * 50}px;">`;
-        if (!actor || recentItems.length === 0) return;
+    
+        const combatHUD = document.createElement("div");
+        combatHUD.className = "combatHUD";
+        combatHUD.style.width = `${cols * 50}px`;
+    
         for (let i = 0; i < Math.min(maxEls, recentItems.length); i++) {
             let itemId = recentItems[i];
-            let item = actor.items.find((i) => i.id === itemId);
+            let item = actor.items.find(i => i.id === itemId);
             if (item) {
-                recentItemsHtml += `<div class="control-icon" name="CBHUDbtn" id="${item.name}">
-                  <img src="${item.img}" width="36" height="36" title='${item.name}'></i>
-                                  </div>`;
+                const iconDiv = document.createElement("div");
+                iconDiv.className = "control-icon";
+                iconDiv.setAttribute("name", "CBHUDbtn");
+                iconDiv.id = item.name;
+    
+                const img = document.createElement("img");
+                img.src = item.img;
+                img.width = 36;
+                img.height = 36;
+                img.title = item.name;
+    
+                iconDiv.appendChild(img);
+                combatHUD.appendChild(iconDiv);
             }
         }
-        recentItemsHtml += `</div>`;
-        const controlIcons = html.find(`div[class="col left"]`);
-        controlIcons.before(recentItemsHtml);
-        const cHUDWidth = $(".combatHUD").outerWidth(true);
-        const hudWidth = $(html).outerWidth(true);
-        const diff = (hudWidth - cHUDWidth) / 2;
-        $(".combatHUD").css({ left: diff });
-        $(html.find(`div[name="CBHUDbtn"]`)).on("click", test);
-        function test() {
-            dnd5e.documents.macro.rollItem(this.id);
+    
+        const controlIcons = html.querySelector('div.col.left');
+        if (controlIcons && controlIcons.parentNode) {
+            controlIcons.parentNode.insertBefore(combatHUD, controlIcons);
         }
+    
+        combatHUD.querySelectorAll('div[name="CBHUDbtn"]').forEach(btn => {
+            btn.addEventListener("click", function () {
+                dnd5e.documents.macro.rollItem(this.id);
+            });
+        });
     });
+    
 });
