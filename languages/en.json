@@ -52,5 +52,7 @@
 
     "combatbooster.yourTurn.text":"It's Your Turn!",
 
-    "combatbooster.settings.combatsounds.default":"Combat Booster"
+    "combatbooster.settings.combatsounds.default":"Combat Booster",
+
+    "combatbooster.coreMarker":"The Core Foundry VTT Turn Marker as been disabled as you are using Combat Booster's Advanced Turn Marker."
 }
