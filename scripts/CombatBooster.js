@@ -16,7 +16,7 @@ Hooks.on("updateActor", async function (actor, updates) {
                 token.object?.release();
                 const pileToken = canvas.tokens.placeables.find((t) => t.name.toLowerCase() === "pile");
                 const { x, y } = pileToken ? pileToken.document : { x: 0, y: 0 };
-                await token.update({ x, y }, { animate: false });
+                await token.move([{ x, y, action: "displace" }], { animate: false });
             }
         } else if (hp > 0 && game.settings.get("combatbooster", "markDefeated")) {
             if (combatant.defeated) await ui.combat._onToggleDefeatedStatus(combatant);
