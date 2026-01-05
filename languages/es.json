@@ -4,8 +4,10 @@
 	
     "combatbooster.settings.enableMarker.text":"Habilitar marcador de turno",
     "combatbooster.settings.enableMarker.hint":"Muestra un marcador sobre el contendiente actual",
-    "combatbooster.settings.markerPath.name":"Imagen de marcador de turno",
-    "combatbooster.settings.markerPath.hint":"Imagen que se usará como marcador",
+    "combatbooster.settings.markerPath.name":"Imagen de marcador aliado",
+    "combatbooster.settings.markerPath.hint":"Imagen que se usará como marcador para tokens aliados",
+    "combatbooster.settings.hostileMarkerPath.name":"Imagen de marcador hostil",
+    "combatbooster.settings.hostileMarkerPath.hint":"Imagen que se usará como marcador para tokens hostiles",
     "combatbooster.settings.markerSpeed.text":"Velocidad de rotación del marcador",
     "combatbooster.settings.markerSpeed.hint":"Velocidad de rotación del marcador de turno",
     "combatbooster.settings.markerScale.text":"Escala del marcador",

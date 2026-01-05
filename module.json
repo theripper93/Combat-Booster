@@ -34,6 +34,11 @@
       "lang": "pt-BR",
       "name": "Português (Brasil)",
       "path": "languages/pt-BR.json"
+    },
+    {
+      "lang": "cn",
+      "name": "中文",
+      "path": "languages/zh-CN.json"
     }
   ],
   "scripts": [

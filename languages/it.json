@@ -1,8 +1,10 @@
 {
     "combatbooster.settings.enableMarker.text":"Abilita Indicatore Turno",
     "combatbooster.settings.enableMarker.hint":"Se abilitato, verrà visualizzato un indicatore sul token del combattente durante il suo turno",
-    "combatbooster.settings.markerPath.name":"Immagine Indicatore Turno",
-    "combatbooster.settings.markerPath.hint":"Immagine da utilizzare come indicatore di turno",
+    "combatbooster.settings.markerPath.name":"Immagine Indicatore Amico",
+    "combatbooster.settings.markerPath.hint":"Immagine da utilizzare come indicatore per token amici",
+    "combatbooster.settings.hostileMarkerPath.name":"Immagine Indicatore Ostile",
+    "combatbooster.settings.hostileMarkerPath.hint":"Immagine da utilizzare come indicatore per token ostili",
     "combatbooster.settings.markerSpeed.text":"Velocità Rotazione Indicatore Turno",
     "combatbooster.settings.markerSpeed.hint":"Velocità di rotazione applicata all'indicatore di turno",
     "combatbooster.settings.markerScale.text":"Scala Dimensione Indicatore",
