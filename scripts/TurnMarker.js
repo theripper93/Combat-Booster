@@ -13,6 +13,7 @@ class TurnMarker {
         this.ignoreScale = game.settings.get("combatbooster", "markerIgnoreScale");
         let video = this.img.endsWith("webm") ? document.createElement("video") : null;
         if (video) {
+            video.crossOrigin = "anonymous";
             video.muted = true;
             video.src = this.img;
             video.loop = true;
