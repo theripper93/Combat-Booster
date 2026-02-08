@@ -1,8 +1,10 @@
 {
     "combatbooster.settings.enableMarker.text":"ターン・マーカ有効化",
     "combatbooster.settings.enableMarker.hint":"現在ターン（手番）が来ているコマに表示されるマーカです。",
-    "combatbooster.settings.markerPath.name":"ターン・マーカの画像",
-    "combatbooster.settings.markerPath.hint":"マーカとして表示する画像を設定します。",
+    "combatbooster.settings.markerPath.name":"友好マーカの画像",
+    "combatbooster.settings.markerPath.hint":"友好的なトークンのマーカとして表示する画像を設定します",
+    "combatbooster.settings.hostileMarkerPath.name":"敵対マーカの画像",
+    "combatbooster.settings.hostileMarkerPath.hint":"敵対的なトークンのマーカとして表示する画像を設定します",
     "combatbooster.settings.markerSpeed.text":"ターン・マーカ回転速度",
     "combatbooster.settings.markerSpeed.hint":"マーカの回転速度",
     "combatbooster.settings.markerScale.text":"ターン・マーカの倍率",

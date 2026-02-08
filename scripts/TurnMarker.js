@@ -57,6 +57,16 @@ class TurnMarker {
         return game.settings.get("combatbooster", "markerPath");
     }
 
+    getMarkerImgForToken(token) {
+        if (!token) return this.markerImg;
+        const disposition = token.document?.disposition ?? token.disposition;
+        // CONST.TOKEN_DISPOSITIONS: HOSTILE = -1, NEUTRAL = 0, FRIENDLY = 1
+        if (disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE) {
+            return game.settings.get("combatbooster", "hostileMarkerPath");
+        }
+        return this.markerImg;
+    }
+
     get TM_Class() {
         return TurnMarker;
     }
@@ -74,7 +84,24 @@ class TurnMarker {
         this.token = token;
         if (!token) return;
         this.markerAbove ? token.addChild(this.container) : token.addChildAt(this.container, 0);
+        this.updateSpriteTexture(token);
         this.Update();
+    }
+
+    updateSpriteTexture(token) {
+        const newImg = this.getMarkerImgForToken(token);
+        if (this.img === newImg) return;
+        this.img = newImg;
+        
+        if (newImg.endsWith("webm")) {
+            let video = document.createElement("video");
+            video.muted = true;
+            video.src = newImg;
+            video.loop = true;
+            this.sprite.texture = PIXI.Texture.from(video);
+        } else {
+            this.sprite.texture = PIXI.Texture.from(newImg);
+        }
     }
 
     Destroy(reallyDestroy) {

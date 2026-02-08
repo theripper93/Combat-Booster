@@ -88,6 +88,19 @@ Hooks.once("init", function () {
     },
   });
 
+  game.settings.register("combatbooster", "hostileMarkerPath", {
+    name: game.i18n.localize("combatbooster.settings.hostileMarkerPath.name"),
+    hint: game.i18n.localize("combatbooster.settings.hostileMarkerPath.hint"),
+    scope: "world",
+    config: true,
+    type: String,
+    default: "modules/combatbooster/markers/tolkien_marker_red.png",
+    filePicker: "imagevideo",
+    onChange: function () {
+      refreshMarkers();
+    },
+  });
+
   game.settings.register("combatbooster", "startMarkerPath", {
     name: game.i18n.localize("combatbooster.settings.startMarkerPath.name"),
     hint: game.i18n.localize("combatbooster.settings.startMarkerPath.hint"),
