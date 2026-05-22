@@ -48,6 +48,7 @@ Hooks.once("init", function () {
                 img.width = 36;
                 img.height = 36;
                 img.title = item.name;
+                img.style.filter = "none";
     
                 iconDiv.appendChild(img);
                 combatHUD.appendChild(iconDiv);
